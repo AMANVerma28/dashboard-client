@@ -2,18 +2,18 @@
 <!doctype html>
 <html lang="en">
 <head>
-	<title>3D Well</title>
-	<meta charset="utf-8" />
-	<meta https-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta charset="utf-8" />
+    <meta https-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 
 
-	<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
+    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
     <meta name="viewport" content="width=device-width" />
 
-
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Bootstrap core CSS     -->
     <link href="{% static 'css/bootstrap.min.css'  %}" rel="stylesheet" />
     <link href="{% static 'css/slider.css'  %}" rel="stylesheet" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 
     <!-- Animation library for notifications   -->
     <link href="{% static 'css/animate.min.css' %}" rel="stylesheet"/>
@@ -24,21 +24,21 @@
 
     <!--  CSS for Demo Purpose, don't include it in your project     -->
     <link href="{% static 'css/demo.css'%}" rel="stylesheet" />
- <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
 
     <!--     Fonts and icons     -->
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
     <link href='https://fonts.googleapis.com/css?family=Roboto:400,700,300' rel='stylesheet' type='text/css'>
-	<link href="{% static 'css/pe-icon-7-stroke.css'%}" rel="stylesheet" />
-	<link rel="stylesheet" href ="{% static 'Cesium-1.38/Build/Cesium/Widgets/widgets.css' %}"></link>	
+    <link href="{% static 'css/pe-icon-7-stroke.css'%}" rel="stylesheet" />
+    <link rel="stylesheet" href ="{% static 'Cesium-1.38/Build/Cesium/Widgets/widgets.css' %}"></link>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
 <style>
-
-
    
-.modal {
+      .modal {
   text-align: center;
 }
 
@@ -62,132 +62,78 @@
   text-align: left;
   vertical-align: middle;
 } 
+
 html,body,#cesiumContainer{
-    width: 100%;height: 600px;margin: 0;padding: 0;overflow: hidden;
+    height: 580px;
 }
-
-html,body,#map{
-    width: 100%;height: 600px;margin: 0;padding: 0;overflow: hidden;
-}
-
 </style>
+
 </head>
 <body>
 <div class="wrapper">
-    <div class="sidebar" data-color="purple" data-image="{% static 'img/sidebar-5.jpg'%}">
+    
 
+    <!-- Sidebar -->
+    <div class="sidebar" data-color="purple" data-image="{% static 'img/sidebar-5.jpg' %}">
     <!--
-
         Tip 1: you can change the color of the sidebar using: data-color="blue | azure | green | orange | red | purple"
         Tip 2: you can also add an image using data-image tag
-
     -->
-
-    	<div class="sidebar-wrapper">
+        <div class="sidebar-wrapper">
             <div class="logo">
                 <a href="https://www.creative-tim.com" class="simple-text">
-                    GIS project
+                    ZBNF
                 </a>
             </div>
 
             <ul class="nav">
-                <li>
+                <li class="active">
                     <a href="http://django-env.fcunima3dx.ap-south-1.elasticbeanstalk.com">
                         <i class="pe-7s-graph"></i>
-                        <p>Dashboard</p>
+                        <p>Visualization</p>
                     </a>
                 </li>
-                <!-- <li>
-                    <a href="http://django-env.fcunima3dx.ap-south-1.elasticbeanstalk.com/well">
-                        <i class="pe-7s-user"></i>
-                        <p>Well</p>
-                    </a>
-                </li>-->
-                <li class="active">
+                <li>
                     <a href="http://django-env.fcunima3dx.ap-south-1.elasticbeanstalk.com/analytics/well">
                         <i class="pe-7s-note2"></i>
                         <p>Analytics</p>
                     </a>
                 </li>
-                <!--<li class="active">
-                    <a href="http://django-env.fcunima3dx.ap-south-1.elasticbeanstalk.com/analytics/well">
-                        <i class="pe-7s-note2"></i>
-                        <p>Analytics 3D</p>
-                    </a>
-                </li>-->
             </ul>
-    	</div>
+
+
+        </div>
     </div>
 
     <div class="main-panel">
+        
+        <!-- Navigation Bar -->
         <nav class="navbar navbar-default navbar-fixed">
             <div class="container-fluid">
                 <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navigation-example-2">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a class="navbar-brand" href="#">Dashboard</a>
+                    <a class="navbar-brand" href="analytics2d">Analytics</a>
                 </div>
                 <div class="collapse navbar-collapse">
                     <ul class="nav navbar-nav navbar-left">
                         <li>
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                              <i class="fa fa-dashboard"></i>
-								              <p class="hidden-lg hidden-md">Dashboard</p>
+                            <a href="analytics2d">
+                                <p>2D Maps</p>
                             </a>
                         </li>
-                        <li class="dropdown">
-                              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                <i class="fa fa-globe"></i>
-                                <b class="caret hidden-sm hidden-xs"></b>
-                                <span class="notification hidden-sm hidden-xs">5</span>
-                  							<p class="hidden-lg hidden-md">5 Notifications<b class="caret"></b></p>
-                              </a>
-                              <ul class="dropdown-menu">
-                                <li><a href="#">Notification 1</a></li>
-                                <li><a href="#">Notification 2</a></li>
-                                <li><a href="#">Notification 3</a></li>
-                                <li><a href="#">Notification 4</a></li>
-                                <li><a href="#">Another notification</a></li>
-                              </ul>
-                        </li>
                         <li>
-                           <a href="">
-                              <i class="fa fa-search"></i>
-								              <p class="hidden-lg hidden-md">Search</p>
+                            <a href="analytics3d">
+                                <p>3D Maps</p>
                             </a>
                         </li>
                     </ul>
 
                     <ul class="nav navbar-nav navbar-right">
                         <li>
-                           <a href="">
-                               <p>Account</p>
+                            <a href="dashboard">
+                                <p>Dashboard</p>
                             </a>
                         </li>
-                        <li class="dropdown">
-                              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                    <p>Dropdown<b class="caret"></b></p>
-                              </a>
-                              <ul class="dropdown-menu">
-                                <li><a href="#">Action</a></li>
-                                <li><a href="#">Another action</a></li>
-                                <li><a href="#">Something</a></li>
-                                <li><a href="#">Another action</a></li>
-                                <li><a href="#">Something</a></li>
-                                <li class="divider"></li>
-                                <li><a href="#">Separated link</a></li>
-                              </ul>
-                        </li>
-                        <li>
-                            <a href="#">
-                                <p>Log out</p>
-                            </a>
-                        </li>
-						            <li class="separator hidden-lg hidden-md"></li>
+                        <li class="separator hidden-lg hidden-md"></li>
                     </ul>
                 </div>
             </div>
@@ -195,38 +141,13 @@ html,body,#map{
 
 
         <!-- Main body -->
-            <div class="container">
-
-                <ul class="nav nav-tabs">
-                        <li class="active"><a data-toggle="tab" href="#gmaps">2D Maps</a></li>
-                        <li><a data-toggle="tab" href="#cmaps">3D Maps</a></li>
-                </ul>
-                <div class="tab-content">
-                    
-                    <!-- Google maps div -->
-                    <div id="gmaps" class="tab-pane fade in active">
-                        <div class="row ">
-                            <div class="card ">
-                                <div id="map" class="col-md-12"></div>
-                            </div>
-                        </div>
-                    </div><!-- End of gmaps div -->
-
-                    <!-- Cesium maps div -->
-                    <div id="cmaps" class="tab-pane fade">
-                        <div class="row ">
-                            <div class="card ">
-                                <div id="cesiumContainer"></div>                     
-                            </div>
-                        </div>
-                    </div><!-- End of cesium maps div -->
-
-
-                </div>
-            </div>
+        <!-- Cesium maps div -->
+        <div id="cesiumContainer"></div>                     
+        <!-- End of cesium maps div -->
     </div>
 </div>
 
+<!-- Footer div -->
 <footer class="footer">
     <div class="container-fluid">
         <nav class="pull-left">
@@ -256,123 +177,13 @@ html,body,#map{
         <p class="copyright pull-right"></p>
     </div>
 </footer>
+
 <script src="{% static 'Cesium-1.38/Build/Cesium/Cesium.js' %}"></script>
 <script src="{% static 'js/jquery.min.js' %}"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script 
 src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCp8LvJ0F70f6K57rvaxrSBFBpff7hWIAI&libraries=places&callback=initMap">
 </script>
-<!-- Script for Google maps -->
-<script>
-    $.get('../static/analytics/out.csv', function(data) {
-      function initMap() {
-        var bounds = new google.maps.LatLngBounds();
-        var mapOptions = {
-          mapTypeId: 'roadmap'
-        };
-  
-         // Display a map on the page
-        var map = new google.maps.Map(document.getElementById("map"), mapOptions);
-  
-         // Multiple Markers
-        var markers = [];
-  
-         // Info Window Content
-        var infoWindowContent = [];
-        data = csvToArray(data);
-        data.forEach(function(item) {
-          markers.push([item.WellID, parseFloat(item.Lat), parseFloat(item.Lon),item.cluster]);
-          infoWindowContent.push([item.Owner,item.cluster]);
-        });
-         // Display multiple markers on a map
-        var infoWindow = new google.maps.InfoWindow(),
-        marker, i;
-  
-        for (i = 0; i < markers.length - 1; i++) {
-          console.log(markers[i][1]);
-          var position = new google.maps.LatLng(markers[i][2], markers[i][1]);      
-          bounds.extend(position);
-          marker = new google.maps.Marker({
-             position: position,
-             map: map,});
-          if(markers[i][3]==1){
-             marker.setIcon('../static/analytics/green-dot.png');
-             }
-          else if(markers[i][3]==2)
-         {
-           marker.setIcon('../static/analytics/red-dot.png');
-         }
-         else if(markers[i][3]==3)
-         {
-          marker.setIcon('../static/analytics/purple-dot.png');
-         }
-         else if(markers[i][3]==4)
-         {
-          marker.setIcon('../static/analytics/blue-dot.png');
-         }
-         else if(markers[i][3]==5)
-         {
-          marker.setIcon('../static/analytics/orange-dot.png');
-         }
-         else if(markers[i][3]==6)
-         {
-          marker.setIcon('../static/analytics/pink.png');
-         }
-         else
-         {
-          marker.setIcon('../static/analytics/yellow.png')
-         }
-  
-           // Allow each marker to have an info window    
-          google.maps.event.addListener(marker, 'click', (function(marker, i) {
-            return function() {
-              infoWindow.setContent(infoWindowContent[i][0]);
-              infoWindow.open(map, marker);
-            }
-          })(marker, i));
-  
-           // Automatically center the map fitting all markers on the screen
-          map.fitBounds(bounds);
-        }
-  
-         // Override our map zoom level once our fitBounds function runs (Make sure it only runs once)
-        var boundsListener = google.maps.event.addListener((map), 'bounds_changed', function(event) {
-          this.setZoom(17);
-          google.maps.event.removeListener(boundsListener);
-        });
-  
-      }
-      initMap();
-    });
-  
-    function csvToArray(csvString) {
-      // The array we're going to build
-      var csvArray = [];
-      // Break it into rows to start
-      var csvRows = csvString.split(/\n/);
-      // Take off the first line to get the headers, then split that into an array
-      var csvHeaders = csvRows.shift().split(',');
-  
-      // Loop through remaining rows
-      for (var rowIndex = 0; rowIndex < csvRows.length; ++rowIndex) {
-        var rowArray = csvRows[rowIndex].split(',');
-         // Create a new row object to store our data.
-        var rowObject = csvArray[rowIndex] = {};
-  
-         // Then iterate through the remaining properties and use the headers as keys
-        for (var propIndex = 0; propIndex < rowArray.length; ++propIndex) {
-           // Grab the value from the row array we're looping through...
-          var propValue = rowArray[propIndex];
-           // ...also grab the relevant header (the RegExp in both of these removes quotes)
-          var propLabel = csvHeaders[propIndex];
-  
-          rowObject[propLabel.trim()] = propValue;
-        }
-      }
-      return csvArray;
-    }
-</script>
-
 
 <!-- Script for Cesium maps -->
 <script>

@@ -40,7 +40,7 @@ def index(request):
 
 #View for charts.
 #It requests data of all models except yield as it doesn't need it.
-def showmaps(request):
+def showcharts(request):
     """data = coreapi.Client()
     schema = data.get("http://127.0.0.1:2469/household")
     with open('static/json/household.json', 'w') as outfile:
@@ -60,7 +60,7 @@ def showmaps(request):
     schema = data.get("http://127.0.0.1:2469/storage")
     with open('static/json/storage.json', 'w') as outfile:
         json.dump(schema, outfile)"""
-    return render(request,'dashboard/maps.html')
+    return render(request,'dashboard/charts.html')
 
 #View for charts.
 #It requests data of just well model as it doesn't need others.
