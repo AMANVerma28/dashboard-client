@@ -108,20 +108,16 @@
                 </a>
             </div>
 
-            <ul class="nav">
-                <li class="active">
-                    <a href="http://django-env.fcunima3dx.ap-south-1.elasticbeanstalk.com">
-                        <i class="pe-7s-graph"></i>
-                        <p>Visualization</p>
-                    </a>
-                </li>
-                <li>
-                    <a href="http://django-env.fcunima3dx.ap-south-1.elasticbeanstalk.com/analytics/well">
-                        <i class="pe-7s-note2"></i>
-                        <p>Analytics</p>
-                    </a>
-                </li>
-            </ul>
+            <div>
+                <form action="#" method="get" class="demoform" id="demoform">
+                    <p>Select markers to display</p><br>
+                    <div id="legends">
+                        <label><input type="checkbox" name="households" value="hh"/>Household</label><br>
+                        <label><input type="checkbox" name="farms" value="fp"/>Farm</label><br>
+                        <label><input type="checkbox" name="wells" value="wp"/>Well</label><br>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 

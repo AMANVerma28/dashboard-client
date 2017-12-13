@@ -12,4 +12,4 @@ def analyticswells(request):
     return render(request,'analytics/wells.html')
 
 def analyticswells1(request):
-    return render(request,'analytics/wells1.html')	
+    return render(request,'analytics/wells1.html')
