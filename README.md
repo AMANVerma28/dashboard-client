@@ -1,3 +1,3 @@
-# dashboard-client
+# ZBNFdashboard
 The server is running on 
-http://gis.iiits.in:2808
+http://django-env.fcunima3dx.ap-south-1.elasticbeanstalk.com/dashboard/
