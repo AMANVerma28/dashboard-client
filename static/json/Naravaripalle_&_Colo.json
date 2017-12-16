@@ -1,0 +1,74 @@
+[
+ {
+   "id": 1,
+   "Farmer_name": "Nagarajanaidhu-Nara",
+   "Father_name": "Srinivasulu Naidhu",
+   "aadhar_no": "XXXXXXXX6322",
+   "category": "OC",
+   "registered_date": "26/11/2017",
+   "registered_season": "rabi",
+   "registered_year": 2017,
+   "is_land_registered": "Yes",
+   "Location": {"type": "Point", "coordinates": [79.26396567, 13.62195410]}
+ },
+ {
+   "id": 2,
+   "Farmer_name": "Gopi Krishna-Nara",
+   "Father_name": "N.hemalatha",
+   "aadhar_no": "XXXXXXXX3042",
+   "category": "OC",
+   "registered_date": "19/11/2017",
+   "registered_season": "rabi",
+   "registered_year": 2017,
+   "is_land_registered": "Yes",
+   "Location": {"type": "Point", "coordinates": [79.26347861, 13.62247232]}
+ },
+ {
+   "id": 3,
+   "Farmer_name": "Jayanthi-Yanamala Manda",
+   "Father_name": "Venkatesh",
+   "aadhar_no": "XXXXXXXX3644",
+   "category": "SC",
+   "registered_date": "19/11/2017",
+   "registered_season": "rabi",
+   "registered_year": 2017,
+   "is_land_registered": "Yes",
+   "Location": {"type": "Point", "coordinates": [79.2648947, 13.6256108]}
+ },
+ {
+   "id": 4,
+   "Farmer_name": "Jyothi-Malampalli",
+   "Father_name": "Mathaiah",
+   "aadhar_no": "XXXXXXXX0164",
+   "category": "SC",
+   "registered_date": "19/11/2017",
+   "registered_season": "rabi",
+   "registered_year": 2017,
+   "is_land_registered": "Yes",
+   "Location": {"type": "Point", "coordinates": [79.26488437, 13.62552006]}
+ },
+ {
+   "id": 5,
+   "Farmer_name": "Sarala-Pullikinti",
+   "Father_name": "P.ravi",
+   "aadhar_no": "XXXXXXXX6060",
+   "category": "SC",
+   "registered_date": "19/11/2017",
+   "registered_season": "rabi",
+   "registered_year": 2017,
+   "is_land_registered": "Yes",
+   "Location": {"type": "Point", "coordinates": [79.2649270, 13.6227352]}
+ },
+ {
+   "id": 6,
+   "Farmer_name": "Srinivasulu Naidhu-Nara",
+   "Father_name": "N.lakshmidevi",
+   "aadhar_no": "XXXXXXXX5336",
+   "category": "OC",
+   "registered_date": "19/11/2017",
+   "registered_season": "rabi",
+   "registered_year": 2017,
+   "is_land_registered": "Yes",
+   "Location": {"type": "Point", "coordinates": [79.2649270, 13.62195410]}
+ }
+]

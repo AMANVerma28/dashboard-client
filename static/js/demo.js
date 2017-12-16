@@ -1,5 +1,4 @@
-  type = ['','info','success','warning','danger'];
-
+type = ['','info','success','warning','danger'];
 demo = {
     initPickColor: function(){
         $('.pick-class-label').click(function(){
@@ -77,7 +76,7 @@ for(var k=0; k<datas.length;k++)
 { 
 if(datas[k].Season==i && datas[k].DateTime.substring(4,-1)==year)
 { 
-  temp[crops.indexOf(datas[k].Crop)]=datas[k].Extent
+  temp[crops.indexOf(datas[k].Crop)]=datas[k].Yield
 }
 }
 
@@ -136,10 +135,4 @@ plot.push(temp)
           series: [62, 32, 6]
         });   
     },
-    
-
-    
-
-
-    
 }

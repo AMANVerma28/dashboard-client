@@ -1,0 +1,62 @@
+[
+ {
+   "id": 1,
+   "Farmer_name": "Munikrishna-Konanki",
+   "Father_name": "Chinnamunuswami",
+   "aadhar_no": "XXXXXXXX8816",
+   "category": "SC",
+   "registered_date": "06/12/2017",
+   "registered_season": "rabi",
+   "registered_year": 2017,
+   "is_land_registered": "Yes",
+   "Location": {"type": "Point", "coordinates": [79.2566625, 13.6231406]}
+ },
+ {
+   "id": 2,
+   "Farmer_name": "Muniratnam-Makkini",
+   "Father_name": "MunaiahMunaiahMunaiahMunaiah",
+   "aadhar_no": "XXXXXXXX7340",
+   "category": "SC",
+   "registered_date": "06/12/2017",
+   "registered_season": "rabi",
+   "registered_year": 2017,
+   "is_land_registered": "No",
+   "Location": {"type": "Point", "coordinates": [79.2565498, 13.6230336]}
+ },
+ {
+   "id": 3,
+   "Farmer_name": "Lalitha-Ranrasupalli",
+   "Father_name": "Venkataramana",
+   "aadhar_no": "XXXXXXXX7784",
+   "category": "SC",
+   "registered_date": "05/12/2017",
+   "registered_season": "rabi",
+   "registered_year": 2017,
+   "is_land_registered": "Yes",
+   "Location": {"type": "Point", "coordinates": [79.2568248, 13.6233806]}
+ },
+ {
+   "id": 4,
+   "Farmer_name": "Chandrashekar-Konanki",
+   "Father_name": "Changaiah",
+   "aadhar_no": "XXXXXXXX1434",
+   "category": "SC",
+   "registered_date": "04/12/2017",
+   "registered_season": "rabi",
+   "registered_year": 2017,
+   "is_land_registered": "Yes",
+   "Location": {"type": "Point", "coordinates": [79.2570255, 13.6230601]}
+ },
+ {
+   "id": 5,
+   "Farmer_name": "Ramesh-Namuri",
+   "Father_name": "Venkataiah",
+   "aadhar_no": "XXXXXXXX2415",
+   "category": "SC",
+   "registered_date": "04/12/2017",
+   "registered_season": "rabi",
+   "registered_year": 2017,
+   "is_land_registered": "No",
+   "Location": {"type": "Point", "coordinates": [79.2568248, 13.6231406]}
+ }
+]
