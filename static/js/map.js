@@ -15,6 +15,11 @@ $('#householdall').change(function()
         clearOverlays();
     }
 });
+
+$('#habitation').change(function()
+{
+    setMap();
+});
 /*
 $('#wellall').change(function()
 {
@@ -112,68 +117,78 @@ var wmarker = [];
 var map;
 function setMap(position) {
 
-    var myCenter = new google.maps.LatLng(13.62195410,79.26396567);
-    var mapCanvas = document.getElementById("map");
-    var mapOptions = {center: myCenter, zoom: 20, mapTypeId: 'satellite'};
-    map = new google.maps.Map(mapCanvas, mapOptions);
-    var srcImage = 'https://developers.google.com/maps/documentation/' +
-        'javascript/examples/full/images/talkeetna.png';
-
     // The custom USGSOverlay object contains the USGS image,
     // the bounds of the image, and a reference to the map.
 
-    var infowindow = new google.maps.InfoWindow();
-    $.getJSON( "../../static/json/harijanawada.json", function( data ) {
-        var marker
-        var house_icon = {
-            url:"../../static/img/yellow_marker.png", 
-            scaledSize: new google.maps.Size(30, 30), 
-            origin: new google.maps.Point(0,0), 
-            anchor: new google.maps.Point(0, 0)
-        };
-        for (row in data)
-        { 
-            marker = new google.maps.Marker({
-                position: new google.maps.LatLng(data[row].Location.coordinates[1], data[row].Location.coordinates[0]),
-                icon:house_icon,
-                
-            });
-            hhmarker.push(marker);
-            google.maps.event.addListener(marker, 'mouseover', (function(marker, row) {
-                return function() {
-                    infowindow.setContent("<b>Name : </b>"+data[row].Farmer_name+ "<br><br>"+"<b>Is Land Registered :</b> "+data[row].is_land_registered+ "");
-                    infowindow.open(map, marker);
-                }
-            })(marker, row));
-            marker.setMap(map);
-        }
-    });
+    var selectvalue = document.getElementById("habitation").value;
+    console.log(selectvalue);
 
-    $.getJSON( "../../static/json/Naravaripalle_&_Colo.json", function( data ) {
-        var marker
-        var house_icon = {
-            url:"../../static/img/yellow_marker.png", 
-            scaledSize: new google.maps.Size(30, 30), 
-            origin: new google.maps.Point(0,0), 
-            anchor: new google.maps.Point(0, 0)
-        };
-        for (row in data)
-        { 
-            marker = new google.maps.Marker({
-                position: new google.maps.LatLng(data[row].Location.coordinates[1], data[row].Location.coordinates[0]),
-                icon:house_icon,
-                
-            });
-            hhmarker.push(marker);
-            google.maps.event.addListener(marker, 'mouseover', (function(marker, row) {
-                return function() {
-                    infowindow.setContent("<b>Name : </b>"+data[row].Farmer_name+ "<br><br>"+"<b>Is Land Registered :</b> "+data[row].is_land_registered+ "");
-                    infowindow.open(map, marker);
-                }
-            })(marker, row));
-            marker.setMap(map);
-        }
-    });
+    var infowindow = new google.maps.InfoWindow();
+    if (selectvalue=="harijanawada"){
+        var myCenter = new google.maps.LatLng(13.6230336,79.2566625);
+        var mapCanvas = document.getElementById("map");
+        var mapOptions = {center: myCenter, zoom: 20, mapTypeId: 'satellite'};
+        map = new google.maps.Map(mapCanvas, mapOptions);
+    
+        $.getJSON( "../../static/json/harijanawada.json", function( data ) {
+            var marker
+            var house_icon = {
+                url:"../../static/img/yellow_marker.png", 
+                scaledSize: new google.maps.Size(15, 30), 
+                origin: new google.maps.Point(0,0), 
+                anchor: new google.maps.Point(0, 0)
+            };
+            for (row in data)
+            { 
+                marker = new google.maps.Marker({
+                    position: new google.maps.LatLng(data[row].Location.coordinates[1], data[row].Location.coordinates[0]),
+                    icon:house_icon,
+                    
+                });
+                hhmarker.push(marker);
+                google.maps.event.addListener(marker, 'mouseover', (function(marker, row) {
+                    return function() {
+                        infowindow.setContent("<b>Name : </b>"+data[row].Farmer_name+ "<br><br>"+"<b>Is Land Registered :</b> "+data[row].is_land_registered+ "");
+                        infowindow.open(map, marker);
+                    }
+                })(marker, row));
+                marker.setMap(map);
+            }
+        });
+    }
+    else
+    {
+        var myCenter = new google.maps.LatLng(13.62401089,79.26396567);
+        var mapCanvas = document.getElementById("map");
+        var mapOptions = {center: myCenter, zoom: 17, mapTypeId: 'satellite'};
+        map = new google.maps.Map(mapCanvas, mapOptions);
+        $.getJSON( "../../static/json/Naravaripalle_&_Colo.json", function( data ) {
+            var marker
+            var house_icon = {
+                url:"../../static/img/yellow_marker.png", 
+                scaledSize: new google.maps.Size(15, 30), 
+                origin: new google.maps.Point(0,0), 
+                anchor: new google.maps.Point(0, 0)
+            };
+            for (row in data)
+            { 
+                marker = new google.maps.Marker({
+                    position: new google.maps.LatLng(data[row].Location.coordinates[1], data[row].Location.coordinates[0]),
+                    icon:house_icon,
+                    
+                });
+                hhmarker.push(marker);
+                google.maps.event.addListener(marker, 'mouseover', (function(marker, row) {
+                    return function() {
+                        infowindow.setContent("<b>Name : </b>"+data[row].Farmer_name+ "<br><br>"+"<b>Is Land Registered :</b> "+data[row].is_land_registered+ "");
+                        infowindow.open(map, marker);
+                    }
+                })(marker, row));
+                marker.setMap(map);
+            }
+        });
+    }
+
 /*
     $.getJSON( "../../static/json/wells.json", function( data ) {
         var marker
