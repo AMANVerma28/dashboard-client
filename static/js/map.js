@@ -148,7 +148,7 @@ function setMap(position) {
                 hhmarker.push(marker);
                 google.maps.event.addListener(marker, 'mouseover', (function(marker, row) {
                     return function() {
-                        infowindow.setContent("<b>Name : </b>"+data[row].Farmer_name+ "<br><br>"+"<b>Is Land Registered :</b> "+data[row].is_land_registered+ "");
+                        infowindow.setContent('<img src="../../static/img/harijanawada/'+data[row].image+'">'+"<br><br>"+"<b>Name : </b>"+data[row].Farmer_name+ "<br><br>"+"<b>Is Land Registered :</b> "+data[row].is_land_registered+ "");
                         infowindow.open(map, marker);
                     }
                 })(marker, row));
@@ -180,7 +180,7 @@ function setMap(position) {
                 hhmarker.push(marker);
                 google.maps.event.addListener(marker, 'mouseover', (function(marker, row) {
                     return function() {
-                        infowindow.setContent("<b>Name : </b>"+data[row].Farmer_name+ "<br><br>"+"<b>Is Land Registered :</b> "+data[row].is_land_registered+ "");
+                        infowindow.setContent('<img src="../../static/img/naravaripalle/'+data[row].image+'">'+"<br><br>"+"<b>Name : </b>"+data[row].Farmer_name+ "<br><br>"+"<b>Is Land Registered :</b> "+data[row].is_land_registered+ "");
                         infowindow.open(map, marker);
                     }
                 })(marker, row));

@@ -9,7 +9,8 @@
    "registered_season": "rabi",
    "registered_year": 2017,
    "is_land_registered": "Yes",
-   "Location": {"type": "Point", "coordinates": [79.2566625, 13.6231406]}
+   "Location": {"type": "Point", "coordinates": [79.2566625, 13.6231406]},
+   "image": "1.JPG"
  },
  {
    "id": 2,
@@ -21,7 +22,8 @@
    "registered_season": "rabi",
    "registered_year": 2017,
    "is_land_registered": "No",
-   "Location": {"type": "Point", "coordinates": [79.2565498, 13.6230336]}
+   "Location": {"type": "Point", "coordinates": [79.2565498, 13.6230336]},
+   "image": "2.JPG"
  },
  {
    "id": 3,
@@ -33,7 +35,8 @@
    "registered_season": "rabi",
    "registered_year": 2017,
    "is_land_registered": "Yes",
-   "Location": {"type": "Point", "coordinates": [79.2568248, 13.6233806]}
+   "Location": {"type": "Point", "coordinates": [79.2568248, 13.6233806]},
+   "image": "3.JPG"
  },
  {
    "id": 4,
@@ -45,7 +48,8 @@
    "registered_season": "rabi",
    "registered_year": 2017,
    "is_land_registered": "Yes",
-   "Location": {"type": "Point", "coordinates": [79.2570255, 13.6230601]}
+   "Location": {"type": "Point", "coordinates": [79.2570255, 13.6230601]},
+   "image": "4.JPG"
  },
  {
    "id": 5,
@@ -57,6 +61,7 @@
    "registered_season": "rabi",
    "registered_year": 2017,
    "is_land_registered": "No",
-   "Location": {"type": "Point", "coordinates": [79.2568248, 13.6231406]}
+   "Location": {"type": "Point", "coordinates": [79.2568248, 13.6231406]},
+   "image": "5.JPG"
  }
 ]
