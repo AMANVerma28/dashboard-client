@@ -10,7 +10,16 @@
    "registered_year": 2017,
    "is_land_registered": "Yes",
    "Location": {"type": "Point", "coordinates": [79.26396567, 13.62195410]},
-   "image": "1.JPG"
+   "Plot": {"type": "Point", "coordinates": [79.26384424, 13.62188659]},
+   "distace_house_farm": 0.02,
+   "image": "1.JPG",
+   "is_own/leased": "Own",
+   "total_extent": 2,
+   "zbnf_irrigated": 1,
+   "zbnf_rainfed": 0,
+   "nonzbnf_irrigated": 1,
+   "nonzbnf_rainfed": 0,
+   "survey": "292/1"
  },
  {
    "id": 2,
@@ -23,7 +32,16 @@
    "registered_year": 2017,
    "is_land_registered": "Yes",
    "Location": {"type": "Point", "coordinates": [79.26347861, 13.62247232]},
-   "image": "2.JPG"
+   "Plot": {"type": "Point", "coordinates": [79.2644216, 13.6227889]},
+   "distace_house_farm": 0.11,
+   "image": "2.JPG",
+   "is_own/leased": "Own",
+   "total_extent": 2,
+   "zbnf_irrigated": 1,
+   "zbnf_rainfed": 0,
+   "nonzbnf_irrigated": 1,
+   "nonzbnf_rainfed": 0,
+   "survey": "14-15"
  },
  {
    "id": 3,
@@ -36,7 +54,16 @@
    "registered_year": 2017,
    "is_land_registered": "Yes",
    "Location": {"type": "Point", "coordinates": [79.2648947, 13.6256108]},
-   "image": "3.JPG"
+   "Plot": {"type": "Point", "coordinates": [79.26489395, 13.62563608]},
+   "distace_house_farm": 0.00,
+   "image": "3.JPG",
+   "is_own/leased": "Leased",
+   "total_extent": 2,
+   "zbnf_irrigated": 1,
+   "zbnf_rainfed": 0,
+   "nonzbnf_irrigated": 1,
+   "nonzbnf_rainfed": 0,
+   "survey": "319/2"
  },
  {
    "id": 4,
@@ -49,7 +76,16 @@
    "registered_year": 2017,
    "is_land_registered": "Yes",
    "Location": {"type": "Point", "coordinates": [79.26488437, 13.62552006]},
-   "image": "4.JPG"
+   "Plot": {"type": "Point", "coordinates": [79.2649266, 13.6255484]},
+   "distace_house_farm": 0.01,
+   "image": "4.JPG",
+   "is_own/leased": "Leased",
+   "total_extent": 2,
+   "zbnf_irrigated": 1,
+   "zbnf_rainfed": 0,
+   "nonzbnf_irrigated": 1,
+   "nonzbnf_rainfed": 0,
+   "survey": "308/1A"
  },
  {
    "id": 5,
@@ -62,7 +98,16 @@
    "registered_year": 2017,
    "is_land_registered": "Yes",
    "Location": {"type": "Point", "coordinates": [79.2649270, 13.6227352]},
-   "image": "5.JPG"
+   "Plot": {"type": "Point", "coordinates": [79.2647129, 13.6227129]},
+   "distace_house_farm": 0.02,
+   "image": "5.JPG",
+   "is_own/leased": "Leased",
+   "total_extent": 1,
+   "zbnf_irrigated": 1,
+   "zbnf_rainfed": 0,
+   "nonzbnf_irrigated": 0,
+   "nonzbnf_rainfed": 0,
+   "survey": null
  },
  {
    "id": 6,
@@ -75,6 +120,15 @@
    "registered_year": 2017,
    "is_land_registered": "Yes",
    "Location": {"type": "Point", "coordinates": [79.2649270, 13.62195410]},
-   "image": "6.JPG"
+   "Plot": null,
+   "distace_house_farm": null,
+   "image": "6.JPG",
+   "is_own/leased": null,
+   "total_extent": null,
+   "zbnf_irrigated": null,
+   "zbnf_rainfed": null,
+   "nonzbnf_irrigated": null,
+   "nonzbnf_rainfed": null,
+   "survey": null
  }
 ]
