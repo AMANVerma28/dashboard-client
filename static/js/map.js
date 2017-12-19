@@ -20,11 +20,11 @@ $('#habitation').change(function()
 {
     setMap();
 });
-/*
-$('#wellall').change(function()
+
+$('#farmall').change(function()
 {
     console.log("inside change");
-    if( $('#wellall').prop("checked"))
+    if( $('#farmall').prop("checked"))
     {
         showOverlays1();
     }
@@ -33,7 +33,7 @@ $('#wellall').change(function()
         clearOverlays1();
     }
 });
-*/
+
 function drawChart(data) {
     var data = google.visualization.arrayToDataTable(data);
     var options = {
@@ -111,9 +111,62 @@ function hi(farm){
         });
     }
 }
+
+function maketable(array){
+    var result = "<table class='table'>";
+    result += "<thead>"+
+    "<tr>Land Info</tr>"+
+      "<tr>"+
+        "<th rowspan='2'>Is Own/Leased</th>"+
+        "<th rowspan='2'>Total Extent(in acres)</th>"+
+        "<th colspan='2'>ZBNf</th>"+
+        "<th colspan='2'>Non ZBNf</th>"+
+        "<th rowspan='2'>Survey No.</th>"+
+      "</tr>"+
+      "<tr>"+
+        "<th>Irrigated Land(in acres)</th>"+
+        "<th>Rainfed Land(in acres)</th>"+
+        "<th>Irrigated Land(in acres)</th>"+
+        "<th>Rainfed Land(in acres)</th>"+
+      "</tr></thead><tbody>";
+
+    result += "<tr>";
+    result += "<td>"+array[0]+"</td>";
+    result += "<td>"+array[1]+"</td>";
+    result += "<td>"+array[2]+"</td>";
+    result += "<td>"+array[3]+"</td>";
+    result += "<td>"+array[4]+"</td>";
+    result += "<td>"+array[5]+"</td>";
+    result += "<td>"+array[6]+"</td>";
+    result += "</tr>";
+    result += "</tbody></table>";
+    return result;
+}
+
+function showtable(farm){
+    $.getJSON( "../../static/json/crops.json", function( data ) {
+        var tableinfo = [];
+        for(row in data)
+        {
+            if(data[row].id==farm.id)
+            {
+                tableinfo.push(data[row].land_type);
+                tableinfo.push(data[row].total_extent);
+                tableinfo.push(data[row].zbnf_irrigated);
+                tableinfo.push(data[row].zbnf_rainfed);
+                tableinfo.push(data[row].nonzbnf_irrigated);
+                tableinfo.push(data[row].nonzbnf_rainfed);
+                tableinfo.push(data[row].survey);
+                break;
+            }
+        }
+        document.getElementById('farmdetails').innerHTML=maketable(tableinfo);
+    });
+}
+
 var hhmarker = [];
 var fmarker = [];
-var wmarker = [];
+var fmarker = [];
 var map;
 function setMap(position) {
 
@@ -155,6 +208,30 @@ function setMap(position) {
                 marker.setMap(map);
             }
         });
+
+        $.getJSON( "../../static/json/harijanawada.json", function( data ) {
+            var marker
+            var farm_icon = {
+                url:"../../static/img/orange_marker.png", 
+                scaledSize: new google.maps.Size(15, 30), 
+                origin: new google.maps.Point(0,0), 
+                anchor: new google.maps.Point(0, 0)
+            };
+            for (row in data)
+            {
+                marker = new google.maps.Marker({
+                    position: new google.maps.LatLng(data[row].Plot.coordinates[1], data[row].Plot.coordinates[0]),
+                    icon:farm_icon,                    
+                });
+                fmarker.push(marker);
+                google.maps.event.addListener(marker, 'click', (function(marker, row) {
+                    return function() {
+                        showtable(data[row]);
+                    }
+                })(marker, row));
+                marker.setMap(map);
+            }
+        });
     }
     else
     {
@@ -187,6 +264,29 @@ function setMap(position) {
                 marker.setMap(map);
             }
         });
+        $.getJSON( "../../static/json/Naravaripalle_&_Colo.json", function( data ) {
+            var marker
+            var farm_icon = {
+                url:"../../static/img/orange_marker.png", 
+                scaledSize: new google.maps.Size(15, 30), 
+                origin: new google.maps.Point(0,0), 
+                anchor: new google.maps.Point(0, 0)
+            };
+            for (row in data)
+            {
+                marker = new google.maps.Marker({
+                    position: new google.maps.LatLng(data[row].Plot.coordinates[1], data[row].Plot.coordinates[0]),
+                    icon:farm_icon,                    
+                });
+                fmarker.push(marker);
+                google.maps.event.addListener(marker, 'click', (function(marker, row) {
+                    return function() {
+                        showtable(data[row]);
+                    }
+                })(marker, row));
+                marker.setMap(map);
+            }
+        });
     }
 
 /*
@@ -206,7 +306,7 @@ function setMap(position) {
                 icon:well_icon,
                 
             });
-            wmarker.push(marker);
+            fmarker.push(marker);
             google.maps.event.addListener(marker, 'mouseover', (function(marker,row) {
                 return function() {
                     infowindow.setContent("<b>Depth : </b>"+data[row].Depth+"<br> <br>"+" <b>Yield :</b> "+ data[row].Average_yield);
@@ -270,22 +370,22 @@ function showOverlays()
 
 function clearOverlays1()
 {
-    if (wmarker)
+    if (fmarker)
     {
-        for( var i = 0, n = wmarker.length; i < n; ++i )
+        for( var i = 0, n = fmarker.length; i < n; ++i )
         {
-            wmarker[i].setMap(null);
+            fmarker[i].setMap(null);
         }
     }
 }
 
 function showOverlays1()
 {
-    if (wmarker)
+    if (fmarker)
     {
-        for( var i = 0, n = wmarker.length; i < n; ++i )
+        for( var i = 0, n = fmarker.length; i < n; ++i )
         {
-            wmarker[i].setMap(map);
+            fmarker[i].setMap(map);
         }
     }
 }
