@@ -114,22 +114,9 @@ function hi(farm){
 
 function maketable(array){
     var result = "<table class='table'>";
-    result += "<thead>"+
-    "<tr>Land Info</tr>"+
-      "<tr>"+
-        "<th rowspan='2'>Is Own/Leased</th>"+
-        "<th rowspan='2'>Total Extent(in acres)</th>"+
-        "<th colspan='2'>ZBNf</th>"+
-        "<th colspan='2'>Non ZBNf</th>"+
-        "<th rowspan='2'>Survey No.</th>"+
-      "</tr>"+
-      "<tr>"+
-        "<th>Irrigated Land(in acres)</th>"+
-        "<th>Rainfed Land(in acres)</th>"+
-        "<th>Irrigated Land(in acres)</th>"+
-        "<th>Rainfed Land(in acres)</th>"+
-      "</tr></thead><tbody>";
-
+    result += "<thead><tr>Land Info</tr><tr><th rowspan='2'>Is Own/Leased</th><th rowspan='2'>Total Extent(in acres)</th>";
+    result += "<th colspan='2'>ZBNf</th><th colspan='2'>Non ZBNf</th><th rowspan='2'>Survey No.</th></tr><tr>";
+    result += "<th>Irrigated Land(in acres)</th><th>Rainfed Land(in acres)</th><th>Irrigated Land(in acres)</th><th>Rainfed Land(in acres)</th></tr></thead><tbody>";
     result += "<tr>";
     result += "<td>"+array[0]+"</td>";
     result += "<td>"+array[1]+"</td>";
@@ -143,8 +130,17 @@ function maketable(array){
     return result;
 }
 
-function showtable(farm){
-    $.getJSON( "../../static/json/crops.json", function( data ) {
+function showtable(farm,habitationvalue){
+    var path;
+    if (habitationvalue=="harijanawada")
+    {
+        path = "../../static/json/harijanawada_farm.json";
+    }
+    else
+    {
+        path = "../../static/json/Naravaripalle_&_Colo.json";
+    }
+    $.getJSON( path, function( data ) {
         var tableinfo = [];
         for(row in data)
         {
@@ -157,15 +153,18 @@ function showtable(farm){
                 tableinfo.push(data[row].nonzbnf_irrigated);
                 tableinfo.push(data[row].nonzbnf_rainfed);
                 tableinfo.push(data[row].survey);
-                break;
+                tableinfo.push(data[row].Farmer_name);
+                tableinfo.push(data[row].distance_house_farm);
+                console.log(data[row].distance_house_farm);
+                $('#myModal').modal();
             }
         }
-        document.getElementById('farmdetails').innerHTML=maketable(tableinfo);
+        document.getElementById('farmdetails').innerHTML="<p>Farmer Name : "+tableinfo[7]+"</p><br>"+
+                "<p>Distance from home : "+tableinfo[8]+"</p><br>"+maketable(tableinfo);
     });
 }
 
 var hhmarker = [];
-var fmarker = [];
 var fmarker = [];
 var map;
 function setMap(position) {
@@ -174,13 +173,12 @@ function setMap(position) {
     // the bounds of the image, and a reference to the map.
 
     var selectvalue = document.getElementById("habitation").value;
-    console.log(selectvalue);
 
     var infowindow = new google.maps.InfoWindow();
     if (selectvalue=="harijanawada"){
         var myCenter = new google.maps.LatLng(13.6230336,79.2566625);
         var mapCanvas = document.getElementById("map");
-        var mapOptions = {center: myCenter, zoom: 20, mapTypeId: 'satellite'};
+        var mapOptions = {center: myCenter, zoom: 17, mapTypeId: 'satellite'};
         map = new google.maps.Map(mapCanvas, mapOptions);
     
         $.getJSON( "../../static/json/harijanawada.json", function( data ) {
@@ -199,7 +197,7 @@ function setMap(position) {
                     
                 });
                 hhmarker.push(marker);
-                google.maps.event.addListener(marker, 'mouseover', (function(marker, row) {
+                google.maps.event.addListener(marker, 'click', (function(marker, row) {
                     return function() {
                         infowindow.setContent('<img src="../../static/img/harijanawada/'+data[row].image+'">'+"<br><br>"+"<b>Name : </b>"+data[row].Farmer_name+ "<br><br>"+"<b>Is Land Registered :</b> "+data[row].is_land_registered+ "");
                         infowindow.open(map, marker);
@@ -209,7 +207,7 @@ function setMap(position) {
             }
         });
 
-        $.getJSON( "../../static/json/harijanawada.json", function( data ) {
+        $.getJSON( "../../static/json/harijanawada_farm.json", function( data ) {
             var marker
             var farm_icon = {
                 url:"../../static/img/orange_marker.png", 
@@ -226,7 +224,7 @@ function setMap(position) {
                 fmarker.push(marker);
                 google.maps.event.addListener(marker, 'click', (function(marker, row) {
                     return function() {
-                        showtable(data[row]);
+                        showtable(data[row],selectvalue);
                     }
                 })(marker, row));
                 marker.setMap(map);
@@ -255,7 +253,7 @@ function setMap(position) {
                     
                 });
                 hhmarker.push(marker);
-                google.maps.event.addListener(marker, 'mouseover', (function(marker, row) {
+                google.maps.event.addListener(marker, 'click', (function(marker, row) {
                     return function() {
                         infowindow.setContent('<img src="../../static/img/naravaripalle/'+data[row].image+'">'+"<br><br>"+"<b>Name : </b>"+data[row].Farmer_name+ "<br><br>"+"<b>Is Land Registered :</b> "+data[row].is_land_registered+ "");
                         infowindow.open(map, marker);
@@ -281,7 +279,7 @@ function setMap(position) {
                 fmarker.push(marker);
                 google.maps.event.addListener(marker, 'click', (function(marker, row) {
                     return function() {
-                        showtable(data[row]);
+                        showtable(data[row],selectvalue);
                     }
                 })(marker, row));
                 marker.setMap(map);
