@@ -137,12 +137,13 @@ function showtable(farm, habitationvalue) {
                 tableinfo.push(data[row].survey);
                 tableinfo.push(data[row].Farmer_name);
                 tableinfo.push(data[row].distance_house_farm);
-                console.log(data[row].distance_house_farm);
+                tableinfo.push(data[row].level);
                 $('#myModal').modal();
             }
         }
         document.getElementById('farmdetails').innerHTML = "<p>Farmer Name : " + tableinfo[7] + "</p><br>" +
-            "<p>Distance from home : " + tableinfo[8] + "</p><br>" + maketable(tableinfo);
+            "<p>Distance from home : " + tableinfo[8] + "</p><br>" + "<p>Level of Natural Farming : " + tableinfo[9] + "</p><br>" 
+            + maketable(tableinfo);
     });
 }
 
@@ -158,7 +159,7 @@ function setMap(position) {
 
     var infowindow = new google.maps.InfoWindow();
     if (selectvalue == "harijanawada") {
-        var myCenter = new google.maps.LatLng(13.6230336, 79.2566625);
+        var myCenter = new google.maps.LatLng(13.6220036, 79.2597805);
         var mapCanvas = document.getElementById("map");
         var mapOptions = { center: myCenter, zoom: 17, mapTypeId: 'satellite' };
         map = new google.maps.Map(mapCanvas, mapOptions);
@@ -187,27 +188,66 @@ function setMap(position) {
                 marker.setMap(map);
             }
         });
-
-        $.getJSON("../../static/json/harijanawada_farm.json", function (data) {
-            var marker
-            var farm_icon = {
-                url: "../../static/img/orange_marker.png",
-                scaledSize: new google.maps.Size(15, 30),
-                origin: new google.maps.Point(0, 0),
-                anchor: new google.maps.Point(0, 0)
-            };
-            for (row in data) {
-                marker = new google.maps.Marker({
-                    position: new google.maps.LatLng(data[row].Plot.coordinates[1], data[row].Plot.coordinates[0]),
-                    icon: farm_icon,
-                });
-                fmarker.push(marker);
-                google.maps.event.addListener(marker, 'click', (function (marker, row) {
-                    return function () {
+        $.getJSON( "../../static/json/harijanawada_farm.json", function( data ) {
+            for (row in data)
+            { 
+                console.log("inside farm");
+                var path=[]
+                for (rows in data[row].Farm.coordinates[0])  
+                {
+                    path.push(new google.maps.LatLng(data[row].Farm.coordinates[0][rows][1],data[row].Farm.coordinates[0][rows][0]))
+                }
+                
+                if (data[row].level==1)
+                {
+                    var flightPath = new google.maps.Polygon({
+                        path: path,
+                        strokeColor: "#f4f442",
+                        strokeOpacity: 1,
+                        strokeWeight: 2,
+                        fillColor: "#f4f442",
+                        fillOpacity: 0.4,
+                    });
+                }
+                else if (data[row].level==2)
+                {
+                    var flightPath = new google.maps.Polygon({
+                        path: path,
+                        strokeColor: "#bef441",
+                        strokeOpacity: 1,
+                        strokeWeight: 2,
+                        fillColor: "#bef441",
+                        fillOpacity: 0.4,
+                    });
+                }
+                else if (data[row].level==3)
+                {
+                    var flightPath = new google.maps.Polygon({
+                        path: path,
+                        strokeColor: "#35ad35",
+                        strokeOpacity: 1,
+                        strokeWeight: 2,
+                        fillColor: "#35ad35",
+                        fillOpacity: 0.4,
+                    });
+                }
+                else
+                {
+                    var flightPath = new google.maps.Polygon({
+                        path: path,
+                        strokeColor: "#158415",
+                        strokeOpacity: 1,
+                        strokeWeight: 2,
+                        fillColor: "#158415",
+                        fillOpacity: 0.4,
+                    });
+                }
+                flightPath.setMap(map);
+                google.maps.event.addListener(flightPath, 'click', (function(marker,row) {
+                    return function() {
                         showtable(data[row], selectvalue);
                     }
-                })(marker, row));
-                marker.setMap(map);
+                })(flightPath, row));
             }
         });
     }
@@ -240,58 +280,70 @@ function setMap(position) {
                 marker.setMap(map);
             }
         });
-        $.getJSON("../../static/json/Naravaripalle_&_Colo.json", function (data) {
-            var marker
-            var farm_icon = {
-                url: "../../static/img/orange_marker.png",
-                scaledSize: new google.maps.Size(15, 30),
-                origin: new google.maps.Point(0, 0),
-                anchor: new google.maps.Point(0, 0)
-            };
-            for (row in data) {
-                marker = new google.maps.Marker({
-                    position: new google.maps.LatLng(data[row].Plot.coordinates[1], data[row].Plot.coordinates[0]),
-                    icon: farm_icon,
-                });
-                fmarker.push(marker);
-                google.maps.event.addListener(marker, 'click', (function (marker, row) {
-                    return function () {
-                        showtable(data[row], selectvalue);
-                    }
-                })(marker, row));
-                marker.setMap(map);
-            }
-        });
-    }
-
-    /*
-        $.getJSON( "../../static/json/farms.json", function( data ) {
+        $.getJSON( "../../static/json/Naravaripalle_&_Colo.json", function( data ) {
             for (row in data)
             { 
+                console.log("inside farm");
                 var path=[]
-                for (rows in data[row].Location.coordinates[0])  
+                for (rows in data[row].Farm.coordinates[0])  
                 {
-                    path.push(new google.maps.LatLng(data[row].Location.coordinates[0][rows][1],data[row].Location.coordinates[0][rows][0]))
+                    path.push(new google.maps.LatLng(data[row].Farm.coordinates[0][rows][1],data[row].Farm.coordinates[0][rows][0]));
                 }
     
-                var flightPath = new google.maps.Polygon({
-                    path: path,
-                    strokeColor: "green",
-                    strokeOpacity: 1,
-                    strokeWeight: 2,
-                    fillColor: "green",
-                    fillOpacity: 0.4,
-                });
+                if (data[row].level==1)
+                {
+                    var flightPath = new google.maps.Polygon({
+                        path: path,
+                        strokeColor: "#f4f442",
+                        strokeOpacity: 1,
+                        strokeWeight: 2,
+                        fillColor: "#f4f442",
+                        fillOpacity: 0.4,
+                    });
+                }
+                else if (data[row].level==2)
+                {
+                    var flightPath = new google.maps.Polygon({
+                        path: path,
+                        strokeColor: "#bef441",
+                        strokeOpacity: 1,
+                        strokeWeight: 2,
+                        fillColor: "#bef441",
+                        fillOpacity: 0.4,
+                    });
+                }
+                else if (data[row].level==3)
+                {
+                    var flightPath = new google.maps.Polygon({
+                        path: path,
+                        strokeColor: "#35ad35",
+                        strokeOpacity: 1,
+                        strokeWeight: 2,
+                        fillColor: "#35ad35",
+                        fillOpacity: 0.4,
+                    });
+                }
+                else
+                {
+                    var flightPath = new google.maps.Polygon({
+                        path: path,
+                        strokeColor: "#158415",
+                        strokeOpacity: 1,
+                        strokeWeight: 2,
+                        fillColor: "#158415",
+                        fillOpacity: 0.4,
+                    });
+                }
     
                 flightPath.setMap(map);
                 google.maps.event.addListener(flightPath, 'click', (function(marker,row) {
                     return function() {
-                        hi(data[row].id)
-                        hello(data[row],data[row].HouseHold)
+                        showtable(data[row], selectvalue);
                     }
                 })(flightPath, row));
             }
-        });*/
+        });
+    }
 }
 
 function clearOverlays() {
