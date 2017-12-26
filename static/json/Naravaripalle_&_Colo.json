@@ -119,16 +119,16 @@
    "registered_season": "rabi",
    "registered_year": 2017,
    "is_land_registered": "Yes",
-   "Location": {"type": "Point", "coordinates": [79.2649270, 13.62195410]},
-   "Plot": null,
-   "distance_house_farm": null,
+   "Location": {"type": "Point", "coordinates": [79.26497353, 13.62553326]},
+   "Plot": {"type": "Point", "coordinates": [79.2650218, 13.6256028]},
+   "distance_house_farm": 0.01,
    "image": "6.JPG",
-   "land_type": null,
-   "total_extent": null,
-   "zbnf_irrigated": null,
-   "zbnf_rainfed": null,
-   "nonzbnf_irrigated": null,
-   "nonzbnf_rainfed": null,
-   "survey": null
+   "land_type": "Leased",
+   "total_extent": 2,
+   "zbnf_irrigated": 1,
+   "zbnf_rainfed": 0,
+   "nonzbnf_irrigated": 1,
+   "nonzbnf_rainfed": 0,
+   "survey": "214/1B2"
  }
 ]
