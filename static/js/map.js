@@ -195,7 +195,7 @@ function setMap(position) {
                 var path=[]
                 for (rows in data[row].Farm.coordinates[0])  
                 {
-                    path.push(new google.maps.LatLng(data[row].Farm.coordinates[0][rows][1],data[row].Farm.coordinates[0][rows][0]))
+                    path.push(new google.maps.LatLng(data[row].Farm.coordinates[0][rows][1],data[row].Farm.coordinates[0][rows][0]));
                 }
                 
                 if (data[row].level==1)
@@ -242,6 +242,7 @@ function setMap(position) {
                         fillOpacity: 0.4,
                     });
                 }
+                fmarker.push(flightPath);
                 flightPath.setMap(map);
                 google.maps.event.addListener(flightPath, 'click', (function(marker,row) {
                     return function() {
@@ -334,7 +335,7 @@ function setMap(position) {
                         fillOpacity: 0.4,
                     });
                 }
-    
+                fmarker.push(flightPath);
                 flightPath.setMap(map);
                 google.maps.event.addListener(flightPath, 'click', (function(marker,row) {
                     return function() {
