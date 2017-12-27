@@ -1,8 +1,3 @@
-$(document).ready(function () {
-    google.charts.load('current', { 'packages': ['corechart'] });
-    google.charts.setOnLoadCallback(hi);
-});
-
 $('#householdall').change(function () {
     console.log("inside change");
     if ($('#householdall').prop("checked")) {
@@ -17,6 +12,10 @@ $('#habitation').change(function () {
     setMap();
 });
 
+$('#Range').change(function () {
+    setMap();
+});
+
 $('#farmall').change(function () {
     console.log("inside change");
     if ($('#farmall').prop("checked")) {
@@ -27,75 +26,12 @@ $('#farmall').change(function () {
     }
 });
 
-function drawChart(data) {
-    var data = google.visualization.arrayToDataTable(data);
-    var options = {
-        width: 400,
-        height: 240,
-        title: 'area percentage of crops',
-        is3D: true,
-    };
-    var chart = new google.visualization.PieChart(document.getElementById('piechart'));
-    google.visualization.events.addListener(chart, 'click', function () {
-        chart.clearChart()
-    });
-    chart.draw(data, options);
-}
+var slider = document.getElementById("Range");
+var output = document.getElementById("value");
+output.innerHTML = slider.value;
 
-function makeTableHTML(myArray, array) {
-    var result = "<table class='table'>";
-    result += "<thead><tr><th>Crop</th><th>Yield</th></tr></thead><tbody>";
-
-    for (var i = 0; i < myArray.length; i++) {
-        result += "<tr>";
-        result += "<td>" + myArray[i] + "</td>";
-        result += "<td>" + array[i] + "</td>";
-        result += "</tr>";
-    }
-    result += "</tbody></table>";
-    return result;
-}
-
-function hello(farm, households) {
-    $.getJSON("../../static/json/members.json", function (data) {
-        for (row in data) {
-
-            if (data[row].HouseHold == households && data[row].Relation == "head") {
-                var owner = data[row].Name
-            }
-        }
-
-        $.getJSON("../../static/json/crops.json", function (data) {
-            var crop = []
-            var yield = []
-            for (row in data) {
-
-                if (data[row].Farm == farm.id && data[row].Season == document.getElementById("season").value && data[row].DateTime.substring(4, -1) == document.getElementById("value").innerHTML) {
-                    crop.push(data[row].Crop)
-                    yield.push(data[row].Yield)
-                }
-            }
-            document.getElementById('farmdetails').innerHTML = "<p><b>owner</b> : " + owner + "</p><br><p><b>Totalarea </b>: " + farm.TotalArea + " hectors</p><br>" + makeTableHTML(crop, yield)
-        });
-    });
-}
-
-function hi(farm) {
-    if (farm) {
-        $('#myModal').modal();
-        $.getJSON("../../static/json/crops.json", function (data) {
-            var piedata = [["crop", "extent"]]
-            for (row in data) {
-                var temp = []
-                if (data[row].Farm == farm && data[row].Season == document.getElementById("season").value && data[row].DateTime.substring(4, -1) == document.getElementById("value").innerHTML) {
-                    temp.push(data[row].Crop)
-                    temp.push(data[row].Extent)
-                    piedata.push(temp)
-                }
-            }
-            drawChart(piedata)
-        });
-    }
+slider.oninput = function () {
+    output.innerHTML = this.value;
 }
 
 function maketable(array) {
@@ -181,7 +117,9 @@ function setMap(position) {
                 hhmarker.push(marker);
                 google.maps.event.addListener(marker, 'click', (function (marker, row) {
                     return function () {
-                        infowindow.setContent('<img src="../../static/img/harijanawada/' + data[row].image + '">' + "<br><br>" + "<b>Name : </b>" + data[row].Farmer_name + "<br><br>" + "<b>Is Land Registered :</b> " + data[row].is_land_registered + "");
+                        infowindow.setContent('<img src="../../static/img/harijanawada/' + data[row].image + '">' + "<br><br>" 
+                            + "<b>Name : </b>" + data[row].Farmer_name + "<br><br>" + "<b>Is Land Registered :</b> " 
+                            + data[row].is_land_registered + "");
                         infowindow.open(map, marker);
                     }
                 })(marker, row));
@@ -191,64 +129,66 @@ function setMap(position) {
         $.getJSON( "../../static/json/harijanawada_farm.json", function( data ) {
             for (row in data)
             { 
-                console.log("inside farm");
-                var path=[]
-                for (rows in data[row].Farm.coordinates[0])  
+                if (data[row].registered_year >= document.getElementById("value").innerHTML)
                 {
-                    path.push(new google.maps.LatLng(data[row].Farm.coordinates[0][rows][1],data[row].Farm.coordinates[0][rows][0]));
-                }
-                
-                if (data[row].level==1)
-                {
-                    var flightPath = new google.maps.Polygon({
-                        path: path,
-                        strokeColor: "#f4f442",
-                        strokeOpacity: 1,
-                        strokeWeight: 2,
-                        fillColor: "#f4f442",
-                        fillOpacity: 0.4,
-                    });
-                }
-                else if (data[row].level==2)
-                {
-                    var flightPath = new google.maps.Polygon({
-                        path: path,
-                        strokeColor: "#bef441",
-                        strokeOpacity: 1,
-                        strokeWeight: 2,
-                        fillColor: "#bef441",
-                        fillOpacity: 0.4,
-                    });
-                }
-                else if (data[row].level==3)
-                {
-                    var flightPath = new google.maps.Polygon({
-                        path: path,
-                        strokeColor: "#35ad35",
-                        strokeOpacity: 1,
-                        strokeWeight: 2,
-                        fillColor: "#35ad35",
-                        fillOpacity: 0.4,
-                    });
-                }
-                else
-                {
-                    var flightPath = new google.maps.Polygon({
-                        path: path,
-                        strokeColor: "#158415",
-                        strokeOpacity: 1,
-                        strokeWeight: 2,
-                        fillColor: "#158415",
-                        fillOpacity: 0.4,
-                    });
-                }
-                fmarker.push(flightPath);
-                flightPath.setMap(map);
-                google.maps.event.addListener(flightPath, 'click', (function(marker,row) {
-                    return function() {
-                        showtable(data[row], selectvalue);
+                    var path=[]
+                    for (rows in data[row].Farm.coordinates[0])  
+                    {
+                        path.push(new google.maps.LatLng(data[row].Farm.coordinates[0][rows][1],data[row].Farm.coordinates[0][rows][0]));
                     }
-                })(flightPath, row));
+                    
+                    if (data[row].level==1)
+                    {
+                        var flightPath = new google.maps.Polygon({
+                            path: path,
+                            strokeColor: "#f4f442",
+                            strokeOpacity: 1,
+                            strokeWeight: 2,
+                            fillColor: "#f4f442",
+                            fillOpacity: 0.4,
+                        });
+                    }
+                    else if (data[row].level==2)
+                    {
+                        var flightPath = new google.maps.Polygon({
+                            path: path,
+                            strokeColor: "#bef441",
+                            strokeOpacity: 1,
+                            strokeWeight: 2,
+                            fillColor: "#bef441",
+                            fillOpacity: 0.4,
+                        });
+                    }
+                    else if (data[row].level==3)
+                    {
+                        var flightPath = new google.maps.Polygon({
+                            path: path,
+                            strokeColor: "#35ad35",
+                            strokeOpacity: 1,
+                            strokeWeight: 2,
+                            fillColor: "#35ad35",
+                            fillOpacity: 0.4,
+                        });
+                    }
+                    else
+                    {
+                        var flightPath = new google.maps.Polygon({
+                            path: path,
+                            strokeColor: "#158415",
+                            strokeOpacity: 1,
+                            strokeWeight: 2,
+                            fillColor: "#158415",
+                            fillOpacity: 0.4,
+                        });
+                    }
+                    fmarker.push(flightPath);
+                    flightPath.setMap(map);
+                    google.maps.event.addListener(flightPath, 'click', (function(marker,row) {
+                        return function() {
+                            showtable(data[row], selectvalue);
+                        }
+                    })(flightPath, row));
+                }
             }
         });
     }
@@ -274,7 +214,9 @@ function setMap(position) {
                 hhmarker.push(marker);
                 google.maps.event.addListener(marker, 'click', (function (marker, row) {
                     return function () {
-                        infowindow.setContent('<img src="../../static/img/naravaripalle/' + data[row].image + '">' + "<br><br>" + "<b>Name : </b>" + data[row].Farmer_name + "<br><br>" + "<b>Is Land Registered :</b> " + data[row].is_land_registered + "");
+                        infowindow.setContent('<img src="../../static/img/naravaripalle/' + data[row].image + '">' + "<br><br>" 
+                            + "<b>Name : </b>" + data[row].Farmer_name + "<br><br>" + "<b>Is Land Registered :</b> " 
+                            + data[row].is_land_registered + "");
                         infowindow.open(map, marker);
                     }
                 })(marker, row));
@@ -284,64 +226,66 @@ function setMap(position) {
         $.getJSON( "../../static/json/Naravaripalle_&_Colo.json", function( data ) {
             for (row in data)
             { 
-                console.log("inside farm");
-                var path=[]
-                for (rows in data[row].Farm.coordinates[0])  
+                if (data[row].registered_year >= document.getElementById("value").innerHTML)
                 {
-                    path.push(new google.maps.LatLng(data[row].Farm.coordinates[0][rows][1],data[row].Farm.coordinates[0][rows][0]));
-                }
-    
-                if (data[row].level==1)
-                {
-                    var flightPath = new google.maps.Polygon({
-                        path: path,
-                        strokeColor: "#f4f442",
-                        strokeOpacity: 1,
-                        strokeWeight: 2,
-                        fillColor: "#f4f442",
-                        fillOpacity: 0.4,
-                    });
-                }
-                else if (data[row].level==2)
-                {
-                    var flightPath = new google.maps.Polygon({
-                        path: path,
-                        strokeColor: "#bef441",
-                        strokeOpacity: 1,
-                        strokeWeight: 2,
-                        fillColor: "#bef441",
-                        fillOpacity: 0.4,
-                    });
-                }
-                else if (data[row].level==3)
-                {
-                    var flightPath = new google.maps.Polygon({
-                        path: path,
-                        strokeColor: "#35ad35",
-                        strokeOpacity: 1,
-                        strokeWeight: 2,
-                        fillColor: "#35ad35",
-                        fillOpacity: 0.4,
-                    });
-                }
-                else
-                {
-                    var flightPath = new google.maps.Polygon({
-                        path: path,
-                        strokeColor: "#158415",
-                        strokeOpacity: 1,
-                        strokeWeight: 2,
-                        fillColor: "#158415",
-                        fillOpacity: 0.4,
-                    });
-                }
-                fmarker.push(flightPath);
-                flightPath.setMap(map);
-                google.maps.event.addListener(flightPath, 'click', (function(marker,row) {
-                    return function() {
-                        showtable(data[row], selectvalue);
+                    var path=[]
+                    for (rows in data[row].Farm.coordinates[0])  
+                    {
+                        path.push(new google.maps.LatLng(data[row].Farm.coordinates[0][rows][1],data[row].Farm.coordinates[0][rows][0]));
                     }
-                })(flightPath, row));
+        
+                    if (data[row].level==1)
+                    {
+                        var flightPath = new google.maps.Polygon({
+                            path: path,
+                            strokeColor: "#f4f442",
+                            strokeOpacity: 1,
+                            strokeWeight: 2,
+                            fillColor: "#f4f442",
+                            fillOpacity: 0.4,
+                        });
+                    }
+                    else if (data[row].level==2)
+                    {
+                        var flightPath = new google.maps.Polygon({
+                            path: path,
+                            strokeColor: "#bef441",
+                            strokeOpacity: 1,
+                            strokeWeight: 2,
+                            fillColor: "#bef441",
+                            fillOpacity: 0.4,
+                        });
+                    }
+                    else if (data[row].level==3)
+                    {
+                        var flightPath = new google.maps.Polygon({
+                            path: path,
+                            strokeColor: "#35ad35",
+                            strokeOpacity: 1,
+                            strokeWeight: 2,
+                            fillColor: "#35ad35",
+                            fillOpacity: 0.4,
+                        });
+                    }
+                    else
+                    {
+                        var flightPath = new google.maps.Polygon({
+                            path: path,
+                            strokeColor: "#158415",
+                            strokeOpacity: 1,
+                            strokeWeight: 2,
+                            fillColor: "#158415",
+                            fillOpacity: 0.4,
+                        });
+                    }
+                    fmarker.push(flightPath);
+                    flightPath.setMap(map);
+                    google.maps.event.addListener(flightPath, 'click', (function(marker,row) {
+                        return function() {
+                            showtable(data[row], selectvalue);
+                        }
+                    })(flightPath, row));
+                }
             }
         });
     }
