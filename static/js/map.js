@@ -90,12 +90,14 @@ function showtable(farm, habitationvalue) {
                 tableinfo.push(data[row].Farmer_name);
                 tableinfo.push(data[row].distance_house_farm);
                 tableinfo.push(data[row].level);
+                tableinfo.push(data[row].registered_season);
+                tableinfo.push(data[row].registered_year);
                 $('#myModal').modal();
             }
         }
         document.getElementById('farmdetails').innerHTML = "<p>Farmer Name : " + tableinfo[7] + "</p><br>" +
             "<p>Distance from home : " + tableinfo[8] + "</p><br>" + "<p>Level of Natural Farming : " + tableinfo[9] + "</p><br>"
-            + maketable(tableinfo);
+            + "<p>Registeration : "+tableinfo[10]+"-"+tableinfo[11]+"</p><br>" + maketable(tableinfo);
     });
 }
 
