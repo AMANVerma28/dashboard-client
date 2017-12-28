@@ -97,7 +97,7 @@ function showtable(farm, habitationvalue) {
         }
         document.getElementById('farmdetails').innerHTML = "<p>Farmer Name : " + tableinfo[7] + "</p><br>" +
             "<p>Distance from home : " + tableinfo[8] + "</p><br>" + "<p>Level of Natural Farming : " + tableinfo[9] + "</p><br>"
-            + "<p>Registeration : "+tableinfo[10]+"-"+tableinfo[11]+"</p><br>" + maketable(tableinfo);
+            + "<p>Registeration : " + tableinfo[10] + "-" + tableinfo[11] + "</p><br>" + maketable(tableinfo);
     });
 }
 
@@ -170,59 +170,58 @@ function setMap(position) {
         if (checked) {
             $.getJSON("../../static/json/harijanawada_farm.json", function (data) {
                 for (row in data) {
-                    if (data[row].registered_year >= document.getElementById("value").innerHTML) {
+                    if (data[row].registered_year >= Math.floor(document.getElementById("value").innerHTML)) {
                         var path = []
                         for (rows in data[row].Farm.coordinates[0]) {
                             path.push(new google.maps.LatLng(data[row].Farm.coordinates[0][rows][1], data[row].Farm.coordinates[0][rows][0]));
                         }
-
-                        if (data[row].level == 1) {
-                            var flightPath = new google.maps.Polygon({
-                                path: path,
-                                strokeColor: "#f4f442",
-                                strokeOpacity: 1,
-                                strokeWeight: 2,
-                                fillColor: "#f4f442",
-                                fillOpacity: 0.4,
-                            });
-                        }
-                        else if (data[row].level == 2) {
-                            var flightPath = new google.maps.Polygon({
-                                path: path,
-                                strokeColor: "#bef441",
-                                strokeOpacity: 1,
-                                strokeWeight: 2,
-                                fillColor: "#bef441",
-                                fillOpacity: 0.4,
-                            });
-                        }
-                        else if (data[row].level == 3) {
-                            var flightPath = new google.maps.Polygon({
-                                path: path,
-                                strokeColor: "#35ad35",
-                                strokeOpacity: 1,
-                                strokeWeight: 2,
-                                fillColor: "#35ad35",
-                                fillOpacity: 0.4,
-                            });
-                        }
-                        else {
-                            var flightPath = new google.maps.Polygon({
-                                path: path,
-                                strokeColor: "#158415",
-                                strokeOpacity: 1,
-                                strokeWeight: 2,
-                                fillColor: "#158415",
-                                fillOpacity: 0.4,
-                            });
-                        }
-                        flightPath.setMap(map);
-                        google.maps.event.addListener(flightPath, 'click', (function (marker, row) {
-                            return function () {
-                                showtable(data[row], selectvalue);
-                            }
-                        })(flightPath, row));
                     }
+                    if (data[row].level == 1) {
+                        var flightPath = new google.maps.Polygon({
+                            path: path,
+                            strokeColor: "#f4f442",
+                            strokeOpacity: 1,
+                            strokeWeight: 2,
+                            fillColor: "#f4f442",
+                            fillOpacity: 0.4,
+                        });
+                    }
+                    else if (data[row].level == 2) {
+                        var flightPath = new google.maps.Polygon({
+                            path: path,
+                            strokeColor: "#bef441",
+                            strokeOpacity: 1,
+                            strokeWeight: 2,
+                            fillColor: "#bef441",
+                            fillOpacity: 0.4,
+                        });
+                    }
+                    else if (data[row].level == 3) {
+                        var flightPath = new google.maps.Polygon({
+                            path: path,
+                            strokeColor: "#35ad35",
+                            strokeOpacity: 1,
+                            strokeWeight: 2,
+                            fillColor: "#35ad35",
+                            fillOpacity: 0.4,
+                        });
+                    }
+                    else {
+                        var flightPath = new google.maps.Polygon({
+                            path: path,
+                            strokeColor: "#158415",
+                            strokeOpacity: 1,
+                            strokeWeight: 2,
+                            fillColor: "#158415",
+                            fillOpacity: 0.4,
+                        });
+                    }
+                    flightPath.setMap(map);
+                    google.maps.event.addListener(flightPath, 'click', (function (marker, row) {
+                        return function () {
+                            showtable(data[row], selectvalue);
+                        }
+                    })(flightPath, row));
                 }
             });
         }
@@ -286,59 +285,58 @@ function setMap(position) {
         if (checked) {
             $.getJSON("../../static/json/Naravaripalle_&_Colo.json", function (data) {
                 for (row in data) {
-                    if (data[row].registered_year >= document.getElementById("value").innerHTML) {
+                    if (data[row].registered_year >= Math.floor(document.getElementById("value").innerHTML)) {
                         var path = []
                         for (rows in data[row].Farm.coordinates[0]) {
                             path.push(new google.maps.LatLng(data[row].Farm.coordinates[0][rows][1], data[row].Farm.coordinates[0][rows][0]));
                         }
-
-                        if (data[row].level == 1) {
-                            var flightPath = new google.maps.Polygon({
-                                path: path,
-                                strokeColor: "#f4f442",
-                                strokeOpacity: 1,
-                                strokeWeight: 2,
-                                fillColor: "#f4f442",
-                                fillOpacity: 0.4,
-                            });
-                        }
-                        else if (data[row].level == 2) {
-                            var flightPath = new google.maps.Polygon({
-                                path: path,
-                                strokeColor: "#bef441",
-                                strokeOpacity: 1,
-                                strokeWeight: 2,
-                                fillColor: "#bef441",
-                                fillOpacity: 0.4,
-                            });
-                        }
-                        else if (data[row].level == 3) {
-                            var flightPath = new google.maps.Polygon({
-                                path: path,
-                                strokeColor: "#35ad35",
-                                strokeOpacity: 1,
-                                strokeWeight: 2,
-                                fillColor: "#35ad35",
-                                fillOpacity: 0.4,
-                            });
-                        }
-                        else {
-                            var flightPath = new google.maps.Polygon({
-                                path: path,
-                                strokeColor: "#158415",
-                                strokeOpacity: 1,
-                                strokeWeight: 2,
-                                fillColor: "#158415",
-                                fillOpacity: 0.4,
-                            });
-                        }
-                        flightPath.setMap(map);
-                        google.maps.event.addListener(flightPath, 'click', (function (marker, row) {
-                            return function () {
-                                showtable(data[row], selectvalue);
-                            }
-                        })(flightPath, row));
                     }
+                    if (data[row].level == 1) {
+                        var flightPath = new google.maps.Polygon({
+                            path: path,
+                            strokeColor: "#f4f442",
+                            strokeOpacity: 1,
+                            strokeWeight: 2,
+                            fillColor: "#f4f442",
+                            fillOpacity: 0.4,
+                        });
+                    }
+                    else if (data[row].level == 2) {
+                        var flightPath = new google.maps.Polygon({
+                            path: path,
+                            strokeColor: "#bef441",
+                            strokeOpacity: 1,
+                            strokeWeight: 2,
+                            fillColor: "#bef441",
+                            fillOpacity: 0.4,
+                        });
+                    }
+                    else if (data[row].level == 3) {
+                        var flightPath = new google.maps.Polygon({
+                            path: path,
+                            strokeColor: "#35ad35",
+                            strokeOpacity: 1,
+                            strokeWeight: 2,
+                            fillColor: "#35ad35",
+                            fillOpacity: 0.4,
+                        });
+                    }
+                    else {
+                        var flightPath = new google.maps.Polygon({
+                            path: path,
+                            strokeColor: "#158415",
+                            strokeOpacity: 1,
+                            strokeWeight: 2,
+                            fillColor: "#158415",
+                            fillOpacity: 0.4,
+                        });
+                    }
+                    flightPath.setMap(map);
+                    google.maps.event.addListener(flightPath, 'click', (function (marker, row) {
+                        return function () {
+                            showtable(data[row], selectvalue);
+                        }
+                    })(flightPath, row));
                 }
             });
         }
