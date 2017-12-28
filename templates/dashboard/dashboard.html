@@ -124,7 +124,10 @@
                             <input id="householdall" type="checkbox" name="households" checked>Household</label>
                         <br> &nbsp;&nbsp;&nbsp;
                         <label>
-                            <input id="farmall" type="checkbox" name="farms" checked>Farm</label>
+                            <input id="farmpointall" type="checkbox" name="farmpoints" checked>Farm as point</label>
+                        <br>&nbsp;&nbsp;&nbsp;
+                        <label>
+                            <input id="farmall" type="checkbox" name="farmpolygon">Farm as polygon</label>
                         <br>
                     </div>
                 </div>
@@ -174,6 +177,7 @@
             <div id="map"></div>
             <div class="legend"></div>
             <div id="slidecontainer">
+                <!--
                 <p style="text-align: center;margin: 6px">Season:
                     <span>
                         <select id="season" style="height:20px;width:120px">
@@ -182,12 +186,12 @@
                             <option value="3">Summer</option>
                         </select>
                     </span>
-                </p>
+                </p> -->
                 <p style="text-align: center;margin: 6px">Year:
                     <span id="value"></span>
                 </p>
                 <p style=" text-align:center;">(Slide below to change the year)</p>
-                <input type="range" min="2000" max="2017" style="width:100%" value="2017" data-show-value="true" class="slider" id="Range">
+                <input type="range" min="2016" max="2018" step="0.25" style="width:100%" value="2017" data-show-value="true" class="slider" id="Range">
             </div>
             <!-- End of Map div -->
         </div>
