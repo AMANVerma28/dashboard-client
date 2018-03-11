@@ -109,236 +109,128 @@ function setMap(position) {
 
     var selectvalue = document.getElementById("habitation").value;
 
-    var infowindow = new google.maps.InfoWindow();
     if (selectvalue == "harijanawada") {
-        var myCenter = new google.maps.LatLng(13.6220036, 79.2597805);
-        var mapCanvas = document.getElementById("map");
-        var mapOptions = { center: myCenter, zoom: 17, mapTypeId: 'satellite' };
-        map = new google.maps.Map(mapCanvas, mapOptions);
-
-        if (hchecked) {
-            $.getJSON("../../static/json/harijanawada.json", function (data) {
-                var marker
-                var house_icon = {
-                    url: "../../static/img/yellow_marker.png",
-                    scaledSize: new google.maps.Size(15, 30),
-                    origin: new google.maps.Point(0, 0),
-                    anchor: new google.maps.Point(0, 0)
-                };
-                for (row in data) {
-                    marker = new google.maps.Marker({
-                        position: new google.maps.LatLng(data[row].Location.coordinates[1], data[row].Location.coordinates[0]),
-                        icon: house_icon,
-
-                    });
-                    google.maps.event.addListener(marker, 'click', (function (marker, row) {
-                        return function () {
-                            infowindow.setContent('<img src="../../static/img/harijanawada/' + data[row].image + '">' + "<br><br>"
-                                + "<b>Name : </b>" + data[row].Farmer_name + "<br><br>" + "<b>Is Land Registered :</b> "
-                                + data[row].is_land_registered + "");
-                            infowindow.open(map, marker);
-                        }
-                    })(marker, row));
-                    marker.setMap(map);
-                }
-            });
-        }
-        if (fchecked) {
-            $.getJSON("../../static/json/harijanawada_farm.json", function (data) {
-                var marker
-                var house_icon = {
-                    url: "../../static/img/orange_marker.png",
-                    scaledSize: new google.maps.Size(15, 30),
-                    origin: new google.maps.Point(0, 0),
-                    anchor: new google.maps.Point(0, 0)
-                };
-                for (row in data) {
-                    marker = new google.maps.Marker({
-                        position: new google.maps.LatLng(data[row].Plot.coordinates[1], data[row].Plot.coordinates[0]),
-                        icon: house_icon,
-
-                    });
-                    google.maps.event.addListener(marker, 'click', (function (marker, row) {
-                        return function () {
-                            showtable(data[row], selectvalue);
-                        }
-                    })(marker, row));
-                    marker.setMap(map);
-                }
-            });
-        }
-        if (checked) {
-            $.getJSON("../../static/json/harijanawada_farm.json", function (data) {
-                for (row in data) {
-                    if (data[row].registered_year >= Math.floor(document.getElementById("value").innerHTML)) {
-                        var path = []
-                        for (rows in data[row].Farm.coordinates[0]) {
-                            path.push(new google.maps.LatLng(data[row].Farm.coordinates[0][rows][1], data[row].Farm.coordinates[0][rows][0]));
-                        }
-                    }
-                    if (data[row].level == 1) {
-                        var flightPath = new google.maps.Polygon({
-                            path: path,
-                            strokeColor: "#f4f442",
-                            strokeOpacity: 1,
-                            strokeWeight: 2,
-                            fillColor: "#f4f442",
-                            fillOpacity: 0.4,
-                        });
-                    }
-                    else if (data[row].level == 2) {
-                        var flightPath = new google.maps.Polygon({
-                            path: path,
-                            strokeColor: "#bef441",
-                            strokeOpacity: 1,
-                            strokeWeight: 2,
-                            fillColor: "#bef441",
-                            fillOpacity: 0.4,
-                        });
-                    }
-                    else if (data[row].level == 3) {
-                        var flightPath = new google.maps.Polygon({
-                            path: path,
-                            strokeColor: "#35ad35",
-                            strokeOpacity: 1,
-                            strokeWeight: 2,
-                            fillColor: "#35ad35",
-                            fillOpacity: 0.4,
-                        });
-                    }
-                    else {
-                        var flightPath = new google.maps.Polygon({
-                            path: path,
-                            strokeColor: "#158415",
-                            strokeOpacity: 1,
-                            strokeWeight: 2,
-                            fillColor: "#158415",
-                            fillOpacity: 0.4,
-                        });
-                    }
-                    flightPath.setMap(map);
-                    google.maps.event.addListener(flightPath, 'click', (function (marker, row) {
-                        return function () {
-                            showtable(data[row], selectvalue);
-                        }
-                    })(flightPath, row));
-                }
-            });
-        }
+        var jsonpath = "../../static/json/harijanawada_farm.json";
+        var imagepath = "../../static/img/harijanawada/"
     }
     else {
-        var myCenter = new google.maps.LatLng(13.62401089, 79.26396567);
-        var mapCanvas = document.getElementById("map");
-        var mapOptions = { center: myCenter, zoom: 17, mapTypeId: 'satellite' };
-        map = new google.maps.Map(mapCanvas, mapOptions);
-        if (hchecked) {
-            $.getJSON("../../static/json/Naravaripalle_&_Colo.json", function (data) {
-                var marker
-                var house_icon = {
-                    url: "../../static/img/yellow_marker.png",
-                    scaledSize: new google.maps.Size(15, 30),
-                    origin: new google.maps.Point(0, 0),
-                    anchor: new google.maps.Point(0, 0)
-                };
-                for (row in data) {
-                    marker = new google.maps.Marker({
-                        position: new google.maps.LatLng(data[row].Location.coordinates[1], data[row].Location.coordinates[0]),
-                        icon: house_icon,
+        var jsonpath = "../../static/json/Naravaripalle_&_Colo.json";
+        var imagepath = "../../static/img/naravaripalle/"
+    }
+    var infowindow = new google.maps.InfoWindow();
 
-                    });
-                    google.maps.event.addListener(marker, 'click', (function (marker, row) {
-                        return function () {
-                            infowindow.setContent('<img src="../../static/img/naravaripalle/' + data[row].image + '">' + "<br><br>"
-                                + "<b>Name : </b>" + data[row].Farmer_name + "<br><br>" + "<b>Is Land Registered :</b> "
-                                + data[row].is_land_registered + "");
-                            infowindow.open(map, marker);
-                        }
-                    })(marker, row));
-                    marker.setMap(map);
-                }
-            });
-        }
-        if (fchecked) {
-            $.getJSON("../../static/json/Naravaripalle_&_Colo.json", function (data) {
-                var marker
-                var house_icon = {
-                    url: "../../static/img/orange_marker.png",
-                    scaledSize: new google.maps.Size(15, 30),
-                    origin: new google.maps.Point(0, 0),
-                    anchor: new google.maps.Point(0, 0)
-                };
-                for (row in data) {
-                    marker = new google.maps.Marker({
-                        position: new google.maps.LatLng(data[row].Plot.coordinates[1], data[row].Plot.coordinates[0]),
-                        icon: house_icon,
+    var myCenter = new google.maps.LatLng(13.6220036, 79.2597805);
+    var mapCanvas = document.getElementById("map");
+    var mapOptions = { center: myCenter, zoom: 17, mapTypeId: 'satellite' };
+    map = new google.maps.Map(mapCanvas, mapOptions);
 
+    if (hchecked) {
+        $.getJSON(jsonpath, function (data) {
+            var marker
+            var house_icon = {
+                url: "../../static/img/yellow_marker.png",
+                scaledSize: new google.maps.Size(15, 30),
+                origin: new google.maps.Point(0, 0),
+                anchor: new google.maps.Point(0, 0)
+            };
+            for (row in data) {
+                marker = new google.maps.Marker({
+                    position: new google.maps.LatLng(data[row].Location.coordinates[1], data[row].Location.coordinates[0]),
+                    icon: house_icon,
+
+                });
+                google.maps.event.addListener(marker, 'click', (function (marker, row) {
+                    return function () {
+                        infowindow.setContent('<img src="' + imagepath + data[row].image + '">' + "<br><br>"
+                            + "<b>Name : </b>" + data[row].Farmer_name + "<br><br>" + "<b>Is Land Registered :</b> "
+                            + data[row].is_land_registered + "");
+                        infowindow.open(map, marker);
+                    }
+                })(marker, row));
+                marker.setMap(map);
+            }
+        });
+    }
+    if (fchecked) {
+        $.getJSON(jsonpath, function (data) {
+            var marker
+            var house_icon = {
+                url: "../../static/img/orange_marker.png",
+                scaledSize: new google.maps.Size(15, 30),
+                origin: new google.maps.Point(0, 0),
+                anchor: new google.maps.Point(0, 0)
+            };
+            for (row in data) {
+                marker = new google.maps.Marker({
+                    position: new google.maps.LatLng(data[row].Plot.coordinates[1], data[row].Plot.coordinates[0]),
+                    icon: house_icon,
+
+                });
+                google.maps.event.addListener(marker, 'click', (function (marker, row) {
+                    return function () {
+                        showtable(data[row], selectvalue);
+                    }
+                })(marker, row));
+                marker.setMap(map);
+            }
+        });
+    }
+    if (checked) {
+        $.getJSON(jsonpath, function (data) {
+            for (row in data) {
+                if (data[row].registered_year >= Math.floor(document.getElementById("value").innerHTML)) {
+                    var path = []
+                    for (rows in data[row].Farm.coordinates[0]) {
+                        path.push(new google.maps.LatLng(data[row].Farm.coordinates[0][rows][1], data[row].Farm.coordinates[0][rows][0]));
+                    }
+                }
+                if (data[row].level == 1) {
+                    var flightPath = new google.maps.Polygon({
+                        path: path,
+                        strokeColor: "#f4f442",
+                        strokeOpacity: 1,
+                        strokeWeight: 2,
+                        fillColor: "#f4f442",
+                        fillOpacity: 0.4,
                     });
-                    google.maps.event.addListener(marker, 'click', (function (marker, row) {
-                        return function () {
-                            showtable(data[row], selectvalue);
-                        }
-                    })(marker, row));
-                    marker.setMap(map);
                 }
-            });
-        }
-        if (checked) {
-            $.getJSON("../../static/json/Naravaripalle_&_Colo.json", function (data) {
-                for (row in data) {
-                    if (data[row].registered_year >= Math.floor(document.getElementById("value").innerHTML)) {
-                        var path = []
-                        for (rows in data[row].Farm.coordinates[0]) {
-                            path.push(new google.maps.LatLng(data[row].Farm.coordinates[0][rows][1], data[row].Farm.coordinates[0][rows][0]));
-                        }
-                    }
-                    if (data[row].level == 1) {
-                        var flightPath = new google.maps.Polygon({
-                            path: path,
-                            strokeColor: "#f4f442",
-                            strokeOpacity: 1,
-                            strokeWeight: 2,
-                            fillColor: "#f4f442",
-                            fillOpacity: 0.4,
-                        });
-                    }
-                    else if (data[row].level == 2) {
-                        var flightPath = new google.maps.Polygon({
-                            path: path,
-                            strokeColor: "#bef441",
-                            strokeOpacity: 1,
-                            strokeWeight: 2,
-                            fillColor: "#bef441",
-                            fillOpacity: 0.4,
-                        });
-                    }
-                    else if (data[row].level == 3) {
-                        var flightPath = new google.maps.Polygon({
-                            path: path,
-                            strokeColor: "#35ad35",
-                            strokeOpacity: 1,
-                            strokeWeight: 2,
-                            fillColor: "#35ad35",
-                            fillOpacity: 0.4,
-                        });
-                    }
-                    else {
-                        var flightPath = new google.maps.Polygon({
-                            path: path,
-                            strokeColor: "#158415",
-                            strokeOpacity: 1,
-                            strokeWeight: 2,
-                            fillColor: "#158415",
-                            fillOpacity: 0.4,
-                        });
-                    }
-                    flightPath.setMap(map);
-                    google.maps.event.addListener(flightPath, 'click', (function (marker, row) {
-                        return function () {
-                            showtable(data[row], selectvalue);
-                        }
-                    })(flightPath, row));
+                else if (data[row].level == 2) {
+                    var flightPath = new google.maps.Polygon({
+                        path: path,
+                        strokeColor: "#bef441",
+                        strokeOpacity: 1,
+                        strokeWeight: 2,
+                        fillColor: "#bef441",
+                        fillOpacity: 0.4,
+                    });
                 }
-            });
-        }
+                else if (data[row].level == 3) {
+                    var flightPath = new google.maps.Polygon({
+                        path: path,
+                        strokeColor: "#35ad35",
+                        strokeOpacity: 1,
+                        strokeWeight: 2,
+                        fillColor: "#35ad35",
+                        fillOpacity: 0.4,
+                    });
+                }
+                else {
+                    var flightPath = new google.maps.Polygon({
+                        path: path,
+                        strokeColor: "#158415",
+                        strokeOpacity: 1,
+                        strokeWeight: 2,
+                        fillColor: "#158415",
+                        fillOpacity: 0.4,
+                    });
+                }
+                flightPath.setMap(map);
+                google.maps.event.addListener(flightPath, 'click', (function (marker, row) {
+                    return function () {
+                        showtable(data[row], selectvalue);
+                    }
+                })(flightPath, row));
+            }
+        });
     }
 }
