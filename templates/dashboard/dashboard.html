@@ -36,6 +36,8 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="{% static 'js/readFarmerJson.js' %}"></script>
+    
 
     <style>
         .modal {
@@ -64,7 +66,7 @@
 
 </head>
 
-<body>
+<body onload="initialize()">
 
     <!-- Modal when clicked on a farm area -->
     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -106,11 +108,24 @@
                 </div>
 
                 <div>
+                    <p>&nbsp;&nbsp;Select Cluster</p>
+                    &nbsp;&nbsp;
+                    <select id="cluster" onchange="getClusterValue()">
+                        
+                    </select>
+                </div>
+                <div>
+                    <p>&nbsp;&nbsp;Select Village</p>
+                    &nbsp;&nbsp;
+                    <select id="village" onchange="getVillageValue()">
+                        
+                    </select>
+                </div>
+                <div>
                     <p>&nbsp;&nbsp;Select Habitation</p>
                     &nbsp;&nbsp;
-                    <select id="habitation">
-                        <option value="harijanawada">Harijanawada</option>
-                        <option value="naravaripallecolo">Naravaripalle & Colo</option>
+                    <select id="habitation" onchange="getHabitationValue()">
+                        
                     </select>
                 </div>
                 <br>
