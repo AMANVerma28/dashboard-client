@@ -1,6 +1,6 @@
 var checked = 0;
 var hchecked = 1;
-var fchecked = 1;
+var fchecked = 0;
 $('#householdall').change(function () {
     if ($('#householdall').prop("checked")) {
         hchecked = 1;
@@ -53,8 +53,8 @@ slider.oninput = function () {
 function maketable(array) {
     var result = "<table class='table'>";
     result += "<thead><tr>Land Info</tr><tr><th rowspan='2'>Is Own/Leased</th><th rowspan='2'>Total Extent(in acres)</th>";
-    result += "<th colspan='2'>ZBNf</th><th colspan='2'>Non ZBNf</th><th rowspan='2'>Survey No.</th></tr><tr>";
-    result += "<th>Irrigated Land(in acres)</th><th>Rainfed Land(in acres)</th><th>Irrigated Land(in acres)</th><th>Rainfed Land(in acres)</th></tr></thead><tbody>";
+    result += "<th rowspan='2'>ZBNf Irrigated</th><th rowspan='2'>ZBNf Rainfed</th><th rowspan='2'>Non ZBNf Irrigated</th>";
+    result += "<th rowspan='2'>Non ZBNf Rainfed</th><th rowspan='2'>Survey No.</th></tr><tr>";
     result += "<tr>";
     result += "<td>" + array[0] + "</td>";
     result += "<td>" + array[1] + "</td>";
@@ -69,35 +69,27 @@ function maketable(array) {
 }
 
 function showtable(farm, habitationvalue) {
-    var path;
-    if (habitationvalue == "harijanawada") {
-        path = "../../static/json/harijanawada_farm.json";
-    }
-    else {
-        path = "../../static/json/Naravaripalle_&_Colo.json";
-    }
-    $.getJSON(path, function (data) {
+    habitationvalue = document.getElementById("habitation").value;
+    $.getJSON("../../static/json/lands.json", function (data) {
         var tableinfo = [];
         for (row in data) {
-            if (data[row].id == farm.id) {
-                tableinfo.push(data[row].land_type);
-                tableinfo.push(data[row].total_extent);
-                tableinfo.push(data[row].zbnf_irrigated);
-                tableinfo.push(data[row].zbnf_rainfed);
-                tableinfo.push(data[row].nonzbnf_irrigated);
-                tableinfo.push(data[row].nonzbnf_rainfed);
-                tableinfo.push(data[row].survey);
-                tableinfo.push(data[row].Farmer_name);
-                tableinfo.push(data[row].distance_house_farm);
-                tableinfo.push(data[row].level);
-                tableinfo.push(data[row].registered_season);
-                tableinfo.push(data[row].registered_year);
+            if (data[row].farmer_id == farm.farmer_id) {
+                tableinfo.push(data[row].Is_Ownleased);
+                tableinfo.push(data[row].Total_extent_Land);
+                tableinfo.push(data[row].zbnf_irrigated_land);
+                tableinfo.push(data[row].Zbnf_Rainfed_land);
+                tableinfo.push(data[row].Non_Zbnf_Irrigated_Land);
+                tableinfo.push(data[row].non_zbnf_rainfed_land);
+                tableinfo.push(data[row].Survey_No);
+                tableinfo.push(data[row].farmer_id);
+                tableinfo.push(data[row].irrigated_land);
+                tableinfo.push(data[row].Sno);
                 $('#myModal').modal();
             }
         }
-        document.getElementById('farmdetails').innerHTML = "<p>Farmer Name : " + tableinfo[7] + "</p><br>" +
-            "<p>Distance from home : " + tableinfo[8] + "</p><br>" + "<p>Level of Natural Farming : " + tableinfo[9] + "</p><br>"
-            + "<p>Registeration : " + tableinfo[10] + "-" + tableinfo[11] + "</p><br>" + maketable(tableinfo);
+        document.getElementById('farmdetails').innerHTML = "<p>Farmer ID : " + tableinfo[7] + "</p><br>" +
+            "<p>Irrigated Land : " + tableinfo[8] + "</p><br>" + '<img src="../../static/photos/farm_' + tableinfo[9] + '.jpg">'
+            + "</p><br>" + maketable(tableinfo);
     });
 }
 
@@ -147,7 +139,7 @@ function setMap(position) {
                 };
                 for (row in data) {
                     if (data[row].habitation_name == selectvalue) {
-                        var temp = temp = data[row].farmergps.split('-');
+                        var temp = data[row].farmergps.split('-');
                         marker = new google.maps.Marker({
                             position: new google.maps.LatLng(temp[0], temp[1]),
                             icon: house_icon,
@@ -169,60 +161,99 @@ function setMap(position) {
             });
         }
 
-        $.getJSON("../../static/json/lands.json", function (datas) {
-            var polygon = [];
-            for (i = 0; i < 46; i++) {
-                polygon[i] = datas[i].GIS;
-            }
-            for (entry in polygon) {
-                var temp = polygon[entry].split(',');
-                // console.log(temp.length);
-                for (gis in temp) {
-                    var cord = temp[gis].split('^');
-                    var lat = cord[0];
-                    var temp1 = cord[1].split('#');
-                    var lon = temp1[0];
-                    // console.log("lat:", lat, " lon:", lon);
+        // $.getJSON("../../static/json/lands.json", function (datas) {
+        //     var polygon = [];
+        //     for (i = 0; i < 46; i++) {
+        //         polygon[i] = datas[i].GIS;
+        //     }
+        //     for (entry in polygon) {
+        //         var temp = polygon[entry].split(',');
+        //         // console.log(temp.length);
+        //         for (gis in temp) {
+        //             var cord = temp[gis].split('^');
+        //             var lat = cord[0];
+        //             var temp1 = cord[1].split('#');
+        //             var lon = temp1[0];
+        //             // console.log("lat:", lat, " lon:", lon);
+        //         }
+        //     }
+        //     // console.log(polygon.length);
+        // });
+
+        if (fchecked) {
+            $.getJSON("../../static/json/lands.json", function (datas) {
+                var marker;
+                var house_icon = {
+                    url: "../../static/img/orange_marker.png",
+                    scaledSize: new google.maps.Size(15, 30),
+                    origin: new google.maps.Point(0, 0),
+                    anchor: new google.maps.Point(0, 0)
+                };
+                for (row in data) {
+                    // console.log(data[row].zbnf_date.substring(0,4));
+                    if (data[row].zbnf_date.substring(0, 4) >= Math.floor(document.getElementById("value").innerHTML) && data[row].habitation_name == selectvalue) {
+                        var iter = 46;
+                        for (val=46; val<datas.lenght) {
+                            if (data[row].farmer_id == datas[val].farmer_id && iter > 46) {
+                                //console.log(data[row].farmer_id);
+                                var temp = temp = data[row].farmergps.split('-');
+                                marker = new google.maps.Marker({
+                                    position: new google.maps.LatLng(temp[0], temp[1]),
+                                    icon: house_icon,
+        
+                                });
+                                google.maps.event.addListener(marker, 'click', (function (marker, row) {
+                                    return function () {
+                                        showtable(data[row], selectvalue);
+                                    }
+                                })(marker, row));
+                                marker.setMap(map);
+                            }
+                            iter++;
+                        }
+                    }
                 }
-            }
-            // console.log(polygon.length);
-        });
+            });
+        }
 
         if (checked) {
             $.getJSON("../../static/json/lands.json", function (datas) {
-                // for (row in data) {
-                //     if (data[row].registered_year >= Math.floor(document.getElementById("value").innerHTML)) {
-                //         var path = [];
-                //         for (rows in data[row].Farm.coordinates[0]) {
-                //             path.push(new google.maps.LatLng(data[row].Farm.coordinates[0][rows][1], data[row].Farm.coordinates[0][rows][0]));
-                //         }
-                //     }
-                //     var flightPath = new google.maps.Polygon({
-                //         path: path,
-                //         strokeColor: "#35ad35",
-                //         strokeOpacity: 1,
-                //         strokeWeight: 2,
-                //         fillColor: "#35ad35",
-                //         fillOpacity: 0.4,
-                //     });
-                //     flightPath.setMap(map);
-                //     google.maps.event.addListener(flightPath, 'click', (function (marker, row) {
-                //         return function () {
-                //             showtable(data[row], selectvalue);
-                //         }
-                //     })(flightPath, row));
-                // }
-                // console.log("hello");
                 for (row in data) {
                     // console.log(data[row].zbnf_date.substring(0,4));
-                    if (data[row].zbnf_date.substring(0,4) >= Math.floor(document.getElementById("value").innerHTML) && data[row].habitation_name == selectvalue )
-                    {
-                        for (val in datas)
-                        {
-                            if (data[row].farmer_id == datas[val].farmer_id)
-                            {
-                                console.log(data[row].farmer_id);
+                    if (data[row].zbnf_date.substring(0, 4) >= Math.floor(document.getElementById("value").innerHTML) && data[row].habitation_name == selectvalue) {
+                        var iter = 0;
+                        var polygon = [];
+                        for (val in datas) {
+                            if (data[row].farmer_id == datas[val].farmer_id && iter < 46) {
+                                //console.log(data[row].farmer_id);
+                                polygon = datas[val].GIS;
+                                var temp = polygon.split(',');
+                                // console.log(temp.length);
+                                var path = [];
+                                for (gis in temp) {
+                                    var cord = temp[gis].split('^');
+                                    var lat = cord[0];
+                                    var temp1 = cord[1].split('#');
+                                    var lon = temp1[0];
+                                    path.push(new google.maps.LatLng(lat, lon));
+                                    // console.log("lat:", lat, " lon:", lon);
+                                }
+                                var flightPath = new google.maps.Polygon({
+                                    path: path,
+                                    strokeColor: "#35ad35",
+                                    strokeOpacity: 1,
+                                    strokeWeight: 2,
+                                    fillColor: "#35ad35",
+                                    fillOpacity: 0.4,
+                                });
+                                flightPath.setMap(map);
+                                google.maps.event.addListener(flightPath, 'click', (function (marker, row) {
+                                    return function () {
+                                        showtable(data[row], selectvalue);
+                                    }
+                                })(flightPath, row));
                             }
+                            iter++;
                         }
                     }
                 }
