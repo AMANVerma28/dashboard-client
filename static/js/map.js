@@ -192,11 +192,15 @@ function setMap(position) {
                 for (row in data) {
                     // console.log(data[row].zbnf_date.substring(0,4));
                     if (data[row].zbnf_date.substring(0, 4) >= Math.floor(document.getElementById("value").innerHTML) && data[row].habitation_name == selectvalue) {
-                        var iter = 46;
-                        for (val=46; val<datas.lenght) {
-                            if (data[row].farmer_id == datas[val].farmer_id && iter > 46) {
+                        //console.log(data[row].farmer_id);
+                        var i = 0;
+                        //console.log("farm",datas[46].farmer_id);
+                        for ( i=46 ; i<78 ; i++ ) {
+                            //console.log("inside for");
+                            if (data[row].farmer_id == datas[i].farmer_id) {
                                 //console.log(data[row].farmer_id);
-                                var temp = temp = data[row].farmergps.split('-');
+                                //console.log(datas[i].farmer_id);
+                                var temp = datas[i].GIS.split('-');
                                 marker = new google.maps.Marker({
                                     position: new google.maps.LatLng(temp[0], temp[1]),
                                     icon: house_icon,
@@ -209,7 +213,6 @@ function setMap(position) {
                                 })(marker, row));
                                 marker.setMap(map);
                             }
-                            iter++;
                         }
                     }
                 }
