@@ -9,6 +9,7 @@ function setDropdown1FarmerJson(){
             }
         }
         clusterArrayLength = clusterArray.length;
+        textSet = textSet + "<option>...</option>";
         for( i = 0; i< clusterArrayLength; i++){
             textSet = textSet + "<option value=\""+clusterArray[i]+"\">"+clusterArray[i]+"</option>";
         }
@@ -27,6 +28,7 @@ function setDropdown2FarmerJson(varClusterName){
             } 
         }
         villageArrayLength = villageArray.length;
+        textSet = textSet + "<option>...</option>";
         for( i = 0; i< villageArrayLength; i++){
             textSet = textSet + "<option value=\""+villageArray[i]+"\">"+villageArray[i]+"</option>";
         }
@@ -46,6 +48,7 @@ function setDropdown3FarmerJson(varClusterName, varVillageName){
             }
         }
         habitationArrayLength = habitationArray.length;
+        textSet = textSet + "<option>...</option>";
         for( i = 0; i< habitationArrayLength; i++){
             textSet = textSet + "<option value=\""+habitationArray[i]+"\">"+habitationArray[i]+"</option>";
         }

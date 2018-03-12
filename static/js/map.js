@@ -108,79 +108,83 @@ function setMap(position) {
     // the bounds of the image, and a reference to the map.
 
     var selectvalue = document.getElementById("habitation").value;
-    console.log("habitation",selectvalue);
-
-    // if (selectvalue == "harijanawada") {
-    //     var jsonpath = "../../static/json/harijanawada_farm.json";
-    //     var imagepath = "../../static/img/harijanawada/"
-    // }
-    // else {
-    //     var jsonpath = "../../static/json/Naravaripalle_&_Colo.json";
-    //     var imagepath = "../../static/img/naravaripalle/"
-    // }
+    console.log("habitation", selectvalue);
 
     $.getJSON("../../static/json/farmers.json", function (data) {
         var clat = 0;
         var clon = 0;
         var count = 0;
         for (obj in data) {
-            //console.log("Hab ",data[obj].habitation_name);
             if (data[obj].habitation_name == selectvalue) {
-                //console.log("inside");
-                count+=1;
-                //console.log(count);
+                count += 1;
                 var temp = data[obj].farmergps.split('-');
                 clat += parseFloat(temp[0]);
                 clon += parseFloat(temp[1]);
-                //console.log(temp[0],temp[1]);
             }
-            //console.log(clat,clon);
         }
         clat = clat / count;
         clon = clon / count;
-        console.log(selectvalue);
-        //console.log(clat,clon);
-//    });
-    console.log(clat,clon);
-    console.log("hello");
-    var infowindow = new google.maps.InfoWindow();
+        // console.log(selectvalue);
+        // console.log(clat, clon);
+        // console.log("hello");
 
-    var myCenter = new google.maps.LatLng(clat, clon);
-    var mapCanvas = document.getElementById("map");
-    var mapOptions = { center: myCenter, zoom: 17, mapTypeId: 'satellite' };
-    map = new google.maps.Map(mapCanvas, mapOptions);
+        var infowindow = new google.maps.InfoWindow();
 
-    if (hchecked) {
-        $.getJSON("../../static/json/farmers.json", function (data) {
-            var marker
-            var house_icon = {
-                url: "../../static/img/yellow_marker.png",
-                scaledSize: new google.maps.Size(15, 30),
-                origin: new google.maps.Point(0, 0),
-                anchor: new google.maps.Point(0, 0)
-            };
-            for (row in data) {
-                if (data[row].habitation_name == selectvalue) {
-                    var temp = temp = data[row].farmergps.split('-');
-                    marker = new google.maps.Marker({
-                        position: new google.maps.LatLng(temp[0], temp[1]),
-                        icon: house_icon,
+        var myCenter = new google.maps.LatLng(clat, clon);
+        var mapCanvas = document.getElementById("map");
+        var mapOptions = { center: myCenter, zoom: 17, mapTypeId: 'satellite' };
+        map = new google.maps.Map(mapCanvas, mapOptions);
 
-                    });
-                    google.maps.event.addListener(marker, 'click', (function (marker, row) {
-                        return function () {
-                            infowindow.setContent('<img src="../../static/photos/farmer_' + data[row].FarmerImage + '">' + "<br><br>"
-                                + "<b>Name : </b>" + data[row].farmer_name + "<br><br>" + "<b>Is Land Registered :</b> "
-                                + data[row].isHavingOwnLand + "");
-                            infowindow.open(map, marker);
-                        }
-                    })(marker, row));
-                    marker.setMap(map);
+        if (hchecked) {
+
+            $.getJSON("../../static/json/farmers.json", function (data) {
+                var marker
+                var house_icon = {
+                    url: "../../static/img/yellow_marker.png",
+                    scaledSize: new google.maps.Size(15, 30),
+                    origin: new google.maps.Point(0, 0),
+                    anchor: new google.maps.Point(0, 0)
+                };
+                for (row in data) {
+                    if (data[row].habitation_name == selectvalue) {
+                        var temp = temp = data[row].farmergps.split('-');
+                        marker = new google.maps.Marker({
+                            position: new google.maps.LatLng(temp[0], temp[1]),
+                            icon: house_icon,
+
+                        });
+                        google.maps.event.addListener(marker, 'click', (function (marker, row) {
+                            return function () {
+                                infowindow.setContent('<img src="../../static/photos/farmer_' + data[row].FarmerImage + '">'
+                                    + "<br><br>" + "<b>Name : </b>" + data[row].farmer_name + "<br><br>"
+                                    + "<b>Farmer Category :</b> " + data[row].farmer_category + "<br><br>"
+                                    + "<b>Mobile Number  :</b> " + data[row].mobile_number + "<br><br>"
+                                    + "<b>Is having own land :</b> " + data[row].isHavingOwnLand);
+                                infowindow.open(map, marker);
+                            }
+                        })(marker, row));
+                        marker.setMap(map);
+                    }
                 }
+            });
+        }
+    });
+
+    $.getJSON("../../static/json/lands.json", function (data) {
+        var polygon = [];
+        for (obj in data)
+        {
+            polygon = data[obj].GIS.split(',');
+            console.log(polygon[0]);
+            for (entry in polygon)
+            {
+                var temp = polygon[entry].split('^');
+                polygon[entry][0] = temp[0];
+                var temp1 = temp[1].split('#');
+                polygon[entry][1] = temp1[0];
             }
-        });
-    }
-});
+        }
+    });
     // if (fchecked) {
     //     $.getJSON(jsonpath, function (data) {
     //         var marker
