@@ -93,6 +93,30 @@ function showtable(farm, habitationvalue) {
     });
 }
 
+function showtable1(farmer, habitationvalue) {
+    habitationvalue = document.getElementById("habitation").value;
+    $.getJSON("../../static/json/farmers.json", function (data) {
+        var tableinfo = [];
+        for (row in data) {
+            if (data[row].farmer_id == farmer.farmer_id) {
+                tableinfo.push(data[row].farmer_id);
+                tableinfo.push(data[row].farmer_name);
+                tableinfo.push(data[row].farmer_surname);
+                tableinfo.push(data[row].farmer_category);
+                tableinfo.push(data[row].Social_category);
+                tableinfo.push(data[row].mobile_number);
+                tableinfo.push(data[row].isHavingOwnLand);
+                tableinfo.push(data[row].FarmerImage);
+                $('#myModal').modal();
+            }
+        }
+        document.getElementById('farmdetails').innerHTML = '<img src="../../static/photos/farmer_' + tableinfo[7] + '">'
+        + "</p><br>" + "<p>Farmer Name : " + tableinfo[2] + " " + tableinfo[1] + "</p><br>" 
+        + "<p>Farmer Category : " + tableinfo[3] + "</p><br>" + "<p>Social Category : " + tableinfo[4] + "</p><br>"
+        + "<p>Mobile no : " + tableinfo[5] + "</p><br>" + "<p>Is having own land : " + tableinfo[6] + "</p><br>";
+    });
+}
+
 var map;
 function setMap(position) {
 
@@ -147,12 +171,13 @@ function setMap(position) {
                         });
                         google.maps.event.addListener(marker, 'click', (function (marker, row) {
                             return function () {
-                                infowindow.setContent('<img src="../../static/photos/farmer_' + data[row].FarmerImage + '">'
-                                    + "<br><br>" + "<b>Name : </b>" + data[row].farmer_name + "<br><br>"
-                                    + "<b>Farmer Category :</b> " + data[row].farmer_category + "<br><br>"
-                                    + "<b>Mobile Number  :</b> " + data[row].mobile_number + "<br><br>"
-                                    + "<b>Is having own land :</b> " + data[row].isHavingOwnLand);
-                                infowindow.open(map, marker);
+                                showtable1(data[row], selectvalue);
+                                // infowindow.setContent('<img src="../../static/photos/farmer_' + data[row].FarmerImage + '">'
+                                //     + "<br><br>" + "<b>Name : </b>" + data[row].farmer_name + "<br><br>"
+                                //     + "<b>Farmer Category :</b> " + data[row].farmer_category + "<br><br>"
+                                //     + "<b>Mobile Number  :</b> " + data[row].mobile_number + "<br><br>"
+                                //     + "<b>Is having own land :</b> " + data[row].isHavingOwnLand);
+                                // infowindow.open(map, marker);
                             }
                         })(marker, row));
                         marker.setMap(map);
@@ -160,25 +185,6 @@ function setMap(position) {
                 }
             });
         }
-
-        // $.getJSON("../../static/json/lands.json", function (datas) {
-        //     var polygon = [];
-        //     for (i = 0; i < 46; i++) {
-        //         polygon[i] = datas[i].GIS;
-        //     }
-        //     for (entry in polygon) {
-        //         var temp = polygon[entry].split(',');
-        //         // console.log(temp.length);
-        //         for (gis in temp) {
-        //             var cord = temp[gis].split('^');
-        //             var lat = cord[0];
-        //             var temp1 = cord[1].split('#');
-        //             var lon = temp1[0];
-        //             // console.log("lat:", lat, " lon:", lon);
-        //         }
-        //     }
-        //     // console.log(polygon.length);
-        // });
 
         if (fchecked) {
             $.getJSON("../../static/json/lands.json", function (datas) {
