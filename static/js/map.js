@@ -168,103 +168,65 @@ function setMap(position) {
                 }
             });
         }
-    });
 
-    $.getJSON("../../static/json/lands.json", function (data) {
-        var polygon = [];
-        for (obj in data)
-        {
-            polygon = data[obj].GIS.split(',');
-            console.log(polygon[0]);
-            for (entry in polygon)
-            {
-                var temp = polygon[entry].split('^');
-                polygon[entry][0] = temp[0];
-                var temp1 = temp[1].split('#');
-                polygon[entry][1] = temp1[0];
+        $.getJSON("../../static/json/lands.json", function (datas) {
+            var polygon = [];
+            for (i = 0; i < 46; i++) {
+                polygon[i] = datas[i].GIS;
             }
+            for (entry in polygon) {
+                var temp = polygon[entry].split(',');
+                // console.log(temp.length);
+                for (gis in temp) {
+                    var cord = temp[gis].split('^');
+                    var lat = cord[0];
+                    var temp1 = cord[1].split('#');
+                    var lon = temp1[0];
+                    // console.log("lat:", lat, " lon:", lon);
+                }
+            }
+            // console.log(polygon.length);
+        });
+
+        if (checked) {
+            $.getJSON("../../static/json/lands.json", function (datas) {
+                // for (row in data) {
+                //     if (data[row].registered_year >= Math.floor(document.getElementById("value").innerHTML)) {
+                //         var path = [];
+                //         for (rows in data[row].Farm.coordinates[0]) {
+                //             path.push(new google.maps.LatLng(data[row].Farm.coordinates[0][rows][1], data[row].Farm.coordinates[0][rows][0]));
+                //         }
+                //     }
+                //     var flightPath = new google.maps.Polygon({
+                //         path: path,
+                //         strokeColor: "#35ad35",
+                //         strokeOpacity: 1,
+                //         strokeWeight: 2,
+                //         fillColor: "#35ad35",
+                //         fillOpacity: 0.4,
+                //     });
+                //     flightPath.setMap(map);
+                //     google.maps.event.addListener(flightPath, 'click', (function (marker, row) {
+                //         return function () {
+                //             showtable(data[row], selectvalue);
+                //         }
+                //     })(flightPath, row));
+                // }
+                // console.log("hello");
+                for (row in data) {
+                    // console.log(data[row].zbnf_date.substring(0,4));
+                    if (data[row].zbnf_date.substring(0,4) >= Math.floor(document.getElementById("value").innerHTML) && data[row].habitation_name == selectvalue )
+                    {
+                        for (val in datas)
+                        {
+                            if (data[row].farmer_id == datas[val].farmer_id)
+                            {
+                                console.log(data[row].farmer_id);
+                            }
+                        }
+                    }
+                }
+            });
         }
     });
-    // if (fchecked) {
-    //     $.getJSON(jsonpath, function (data) {
-    //         var marker
-    //         var house_icon = {
-    //             url: "../../static/img/orange_marker.png",
-    //             scaledSize: new google.maps.Size(15, 30),
-    //             origin: new google.maps.Point(0, 0),
-    //             anchor: new google.maps.Point(0, 0)
-    //         };
-    //         for (row in data) {
-    //             marker = new google.maps.Marker({
-    //                 position: new google.maps.LatLng(data[row].Plot.coordinates[1], data[row].Plot.coordinates[0]),
-    //                 icon: house_icon,
-
-    //             });
-    //             google.maps.event.addListener(marker, 'click', (function (marker, row) {
-    //                 return function () {
-    //                     showtable(data[row], selectvalue);
-    //                 }
-    //             })(marker, row));
-    //             marker.setMap(map);
-    //         }
-    //     });
-    // }
-    // if (checked) {
-    //     $.getJSON(jsonpath, function (data) {
-    //         for (row in data) {
-    //             if (data[row].registered_year >= Math.floor(document.getElementById("value").innerHTML)) {
-    //                 var path = []
-    //                 for (rows in data[row].Farm.coordinates[0]) {
-    //                     path.push(new google.maps.LatLng(data[row].Farm.coordinates[0][rows][1], data[row].Farm.coordinates[0][rows][0]));
-    //                 }
-    //             }
-    //             if (data[row].level == 1) {
-    //                 var flightPath = new google.maps.Polygon({
-    //                     path: path,
-    //                     strokeColor: "#f4f442",
-    //                     strokeOpacity: 1,
-    //                     strokeWeight: 2,
-    //                     fillColor: "#f4f442",
-    //                     fillOpacity: 0.4,
-    //                 });
-    //             }
-    //             else if (data[row].level == 2) {
-    //                 var flightPath = new google.maps.Polygon({
-    //                     path: path,
-    //                     strokeColor: "#bef441",
-    //                     strokeOpacity: 1,
-    //                     strokeWeight: 2,
-    //                     fillColor: "#bef441",
-    //                     fillOpacity: 0.4,
-    //                 });
-    //             }
-    //             else if (data[row].level == 3) {
-    //                 var flightPath = new google.maps.Polygon({
-    //                     path: path,
-    //                     strokeColor: "#35ad35",
-    //                     strokeOpacity: 1,
-    //                     strokeWeight: 2,
-    //                     fillColor: "#35ad35",
-    //                     fillOpacity: 0.4,
-    //                 });
-    //             }
-    //             else {
-    //                 var flightPath = new google.maps.Polygon({
-    //                     path: path,
-    //                     strokeColor: "#158415",
-    //                     strokeOpacity: 1,
-    //                     strokeWeight: 2,
-    //                     fillColor: "#158415",
-    //                     fillOpacity: 0.4,
-    //                 });
-    //             }
-    //             flightPath.setMap(map);
-    //             google.maps.event.addListener(flightPath, 'click', (function (marker, row) {
-    //                 return function () {
-    //                     showtable(data[row], selectvalue);
-    //                 }
-    //             })(flightPath, row));
-    //         }
-    //     });
-    // }
 }
