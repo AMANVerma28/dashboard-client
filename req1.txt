@@ -11,7 +11,7 @@ dj-database-url==0.4.2
 Django==1.11.23
 django-filter==1.0.4
 django-rest==0.0.1
-djangorestframework==3.6.4
+djangorestframework==3.9.1
 djangorestframework-gis==0.11.2
 docker-py==1.7.2
 dockerpty==0.4.1
